@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Screen</title>
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico:wght@400&display=swap" rel="stylesheet">
     <style>
         body {
             margin: 0;
@@ -25,9 +25,10 @@
             left: 5%;
             transform: translateY(-50%);
             font-size: 70px;
-            font-weight: bold;
+            font-weight: normal;
             color: #ffffff;
             text-shadow: 0 2px 5px rgba(0, 0, 0, 0.6);
+            z-index: 2; /* Keep time in the background */
         }
 
         .time-display span {
@@ -195,6 +196,9 @@
             priority remains her safety, and I must ensure that no harm comes her way. This document is my final warning 
             to anyone who might take my place in this work—do not underestimate what we are creating here. 
         </p>
+        <br>
+        <!-- New puzzle -->
+        <p><strong>Puzzle:</strong> Locate the code hidden in plain sight within this document. The first hint is embedded in the sequence of numbers found at the end of the previous paragraph. Look for the repeated sequence.</p>
     </div>
 
     <script>
@@ -221,12 +225,12 @@
             setTimeout(() => {
                 loadingScreen.style.display = "none";
                 loginContainer.style.display = "block";
-            }, 2000); // 2-second loading screen
-        }, { once: true });
+            }, 3000);
+        });
 
-        // Handle login
-        document.getElementById("login-form").onsubmit = function (e) {
-            e.preventDefault();
+        // Handle login form submission
+        document.getElementById("login-form").onsubmit = function (event) {
+            event.preventDefault();
             const username = document.getElementById("username").value;
             const password = document.getElementById("password").value;
             if (username === "admin" && password === "password") {
