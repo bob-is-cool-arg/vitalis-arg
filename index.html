@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Screen</title>
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico:wght@400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
     <style>
         body {
             margin: 0;
@@ -13,9 +13,8 @@
             background-image: url('https://github.com/bob-is-cool-arg/vitalis-arg/blob/main/desktop-background.jpg?raw=true');
             background-size: cover;
             background-position: center;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: Arial, sans-serif;
             color: #fff;
-            overflow: hidden; /* Disable body scroll */
         }
 
         /* Time Display */
@@ -27,7 +26,7 @@
             font-size: 70px;
             color: #ffffff;
             text-shadow: 0 2px 5px rgba(0, 0, 0, 0.6);
-            z-index: 2; /* Keep time in the background */
+            z-index: 1;
         }
 
         .time-display span {
@@ -43,38 +42,21 @@
             right: 0;
             height: 5px;
             background-color: rgba(128, 128, 128, 0.7);
-            z-index: 1;
+            z-index: -1;
         }
 
         /* Login Screen */
-        .loading-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
-            color: white;
-            font-size: 20px;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 5;
-        }
-
         .login-container {
-            position: fixed;
+            position: absolute;
             top: 20%;
             left: 50%;
-            transform: translateX(-50%);
+            transform: translate(-50%, -50%);
             background-color: rgba(0, 0, 0, 0.8);
-            padding: 40px;
+            padding: 30px;
             border-radius: 10px;
             width: 400px;
             text-align: center;
-            z-index: 3;
-            backdrop-filter: blur(8px); /* Blurs the background when the login page is open */
-            display: none;
+            z-index: 2;
         }
 
         .login-container input {
@@ -92,15 +74,9 @@
             border-color: #77b5fe;
         }
 
-        .login-header {
-            font-size: 24px;
-            margin-bottom: 20px;
-        }
-
         .document-link {
-            position: absolute;
-            bottom: 10px;
-            left: 10px;
+            margin-top: 15px;
+            display: inline-block;
             color: #77b5fe;
             font-size: 12px;
             text-decoration: none;
@@ -110,23 +86,22 @@
         .document-container {
             position: fixed;
             top: 10%;
-            left: 40%; /* Adjusted to move document to the left */
-            transform: translateX(-50%);
+            left: 50%;
+            transform: translate(-50%, 0);
             background-color: white;
             padding: 20px;
             border-radius: 10px;
             width: 500px;
             color: #000;
             display: none;
-            z-index: 4;
+            z-index: 3;
             text-align: left;
             line-height: 1.5;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(8px); /* Blurs login page when document is open */
-            font-family: 'Pacifico', cursive; /* Messy cursive font */
+            font-family: 'Pacifico', cursive;
+            font-weight: 400; /* Adjust font weight */
             max-height: 70vh;
-            overflow-y: scroll; /* Make the document scrollable */
-            font-weight: normal; /* Make text less bold for more pen-like appearance */
+            overflow-y: auto; /* Scrollable document */
         }
 
         .document-header {
@@ -144,14 +119,29 @@
             cursor: pointer;
         }
 
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            color: white;
+            font-size: 20px;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 4;
+        }
     </style>
 </head>
 <body>
-    <!-- Initial Time-Only Screen -->
+    <!-- Time Display -->
     <div class="time-display" id="time-display">
         <span id="time-text"></span>
     </div>
-    <div class="loading-screen" id="loading-screen">Loading...</div>
+
+    <!-- Login Container -->
     <div class="login-container" id="login-container">
         <div class="login-header">Login</div>
         <form id="login-form">
@@ -166,60 +156,30 @@
     <div class="document-container" id="document-container">
         <div class="document-header">Research Notes</div>
         <div class="close-button" id="close-button">✖</div>
-        <p><strong>Author:</strong> Bob Williams</p>
-        <p><strong>Date:</strong> 04/29</p>
         <p>
-            The purpose of this document is to outline the progress and continuing risks surrounding the research 
-            project initiated under Vitalis Research's auspices. We have encountered both unprecedented breakthroughs 
-            and significant complications.
+            Notes on subject anomalies...
+            <!-- Add your puzzle or other text here -->
         </p>
-        <p>
-            The following research concerns the manipulation of human subjects, involving genetic experimentation, 
-            psychological stressors, and overall well-being monitoring. The project's nature is classified; however, 
-            I can state that we are pushing boundaries on what is humanly possible. The outcome could change the very 
-            fabric of human understanding, but not without cost.
-        </p>
-        <p>
-            The latest report indicates that one subject, identified by their codename "Ava," has demonstrated a 
-            remarkable tolerance to the adverse conditions. While the risks are evident, the subjects’ ability to 
-            endure these stressors gives us hope for future developments.
-        </p>
-        <p>
-            As noted in my earlier communications, the involvement of family has become a point of personal conflict. 
-            My daughter, Ava Williams, who was unknowingly entangled in this project, will never fully comprehend the 
-            extent of my involvement. I’ve kept this hidden from her, but the constant reminder of her name on the 
-            security system—“Ava-1994”—haunts me daily.
-        </p>
-        <p>
-            I must clarify that the future implications of this project far outweigh the personal cost. However, my 
-            priority remains her safety, and I must ensure that no harm comes her way. This document is my final warning 
-            to anyone who might take my place in this work—do not underestimate what we are creating here. 
-        </p>
-        <br>
-        <!-- New puzzle -->
-        <p><strong>Puzzle:</strong> Locate the code hidden in plain sight within this document. The first hint is embedded in the sequence of numbers found at the end of the previous paragraph. Look for the repeated sequence.</p>
+        <p><strong>Puzzle:</strong> Search for the anomaly in this document...</p>
     </div>
+
+    <div class="loading-screen" id="loading-screen">Loading...</div>
 
     <script>
         // Function to display current time
         function updateTime() {
-            const timeDisplay = document.getElementById("time-display");
-            const timeText = document.getElementById("time-text");
             const now = new Date();
             const hours = String(now.getHours()).padStart(2, '0');
             const minutes = String(now.getMinutes()).padStart(2, '0');
-            const seconds = String(now.getSeconds()).padStart(2, '0');
-            timeText.textContent = `${hours}:${minutes}:${seconds}`;
+            document.getElementById("time-text").textContent = `${hours}:${minutes}`;
         }
         setInterval(updateTime, 1000);
-        updateTime();
 
-        // Transition to login screen
-        const loadingScreen = document.getElementById("loading-screen");
         const loginContainer = document.getElementById("login-container");
+        const documentContainer = document.getElementById("document-container");
+        const loadingScreen = document.getElementById("loading-screen");
 
         document.body.addEventListener("click", () => {
-            document.getElementById("time-display").style.display = "none";
             loadingScreen.style.display = "flex";
             setTimeout(() => {
                 loadingScreen.style.display = "none";
@@ -227,32 +187,17 @@
             }, 3000);
         });
 
-        // Handle login form submission
-        document.getElementById("login-form").onsubmit = function (event) {
-            event.preventDefault();
-            const username = document.getElementById("username").value;
-            const password = document.getElementById("password").value;
-            if (username === "admin" && password === "password") {
-                alert("Login successful");
-            } else {
-                alert("Invalid credentials");
-            }
-        };
-
-        // Show document when clicking on link
+        // Document opening
         const documentLink = document.getElementById("document-link");
-        const documentContainer = document.getElementById("document-container");
         const closeButton = document.getElementById("close-button");
 
         documentLink.onclick = function (e) {
             e.preventDefault();
-            documentContainer.style.display = 'block';
-            loginContainer.style.filter = "blur(5px)";
+            documentContainer.style.display = "block";
         };
 
         closeButton.onclick = function () {
-            documentContainer.style.display = 'none';
-            loginContainer.style.filter = "none";
+            documentContainer.style.display = "none";
         };
     </script>
 </body>
