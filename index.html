@@ -43,6 +43,7 @@
       width: 300px;
       opacity: 0;
       animation: fadeIn 1s forwards;
+      text-align: center;
     }
 
     /* Fade-in animation */
@@ -62,88 +63,4 @@
       width: 100%;
       padding: 10px;
       margin-bottom: 20px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      font-size: 16px;
-    }
-
-    .input-field:focus {
-      outline: none;
-      border-color: #0078d4;
-    }
-
-    /* Submit button */
-    .btn {
-      width: 100%;
-      padding: 10px;
-      background-color: #0078d4;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    .btn:hover {
-      background-color: #005a8a;
-    }
-
-    /* Time and date at the bottom */
-    .time-date {
-      position: absolute;
-      bottom: 20px;
-      left: 20px;
-      color: white;
-      font-size: 16px;
-    }
-
-    /* Account info */
-    .account-info {
-      position: absolute;
-      bottom: 20px;
-      right: 20px;
-      color: white;
-      font-size: 16px;
-      text-align: right;
-    }
-
-    /* Icon styling (default for now) */
-    .user-icon {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      background-color: #ccc;
-      margin-bottom: 10px;
-    }
-
-  </style>
-</head>
-<body>
-
-  <!-- Overlay and blur effect -->
-  <div class="overlay"></div>
-
-  <!-- Login Box -->
-  <div class="login-box">
-    <div class="user-icon"></div>
-    <h2 style="text-align:center; color: #333;">Other user</h2>
-    <form>
-      <input type="text" class="input-field" placeholder="Username" required>
-      <input type="password" class="input-field" placeholder="Password" required>
-      <button type="submit" class="btn">Sign in</button>
-    </form>
-  </div>
-
-  <!-- Time and date -->
-  <div class="time-date">
-    03:21:16<br>
-    4/1/2002
-  </div>
-
-  <!-- Account info -->
-  <div class="account-info">
-    Bob Williams
-  </div>
-
-</body>
-</html>
+ 
