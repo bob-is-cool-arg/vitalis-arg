@@ -27,12 +27,12 @@
             position: fixed;
             top: 5%;
             left: 5%;
-            font-size: 48px;
+            font-size: 50px;
             font-weight: bold;
             color: white;
             z-index: 1;
             background: rgba(0, 0, 0, 0.5);
-            padding: 10px;
+            padding: 15px;
             border-radius: 10px;
         }
 
@@ -132,6 +132,7 @@
             display: none;
             z-index: 4;
             overflow-y: auto;
+            transform: rotate(0deg);
         }
 
         .fade {
@@ -147,6 +148,7 @@
         .document-modal p {
             white-space: pre-wrap;
             line-height: 1.6;
+            font-family: 'Segoe UI', sans-serif;
         }
 
         /* Error Messages */
@@ -154,6 +156,16 @@
             color: red;
             font-size: 14px;
             margin-top: 10px;
+        }
+
+        /* Account Name */
+        .account-name {
+            position: absolute;
+            bottom: 5%;
+            right: 5%;
+            font-size: 12px;
+            color: #77b5fe;
+            z-index: 3;
         }
 
     </style>
@@ -179,29 +191,36 @@
         <div class="document-button" id="document-button">View Document</div>
     </div>
 
+    <!-- Account Name (Bob Williams) -->
+    <div class="account-name" id="account-name">Bob Williams</div>
+
     <!-- Document Modal -->
     <div class="document-modal" id="document-modal">
-        <h2>Incident Report - Vitalis Research</h2>
+        <h2>Internal Report - Vitalis Research</h2>
         <p>
             **Operator:** Bob Williams<br>
             **Date:** 04/29/2002<br>
             **Time:** 03:00:00<br><br>
 
-            **Summary:**<br>
-            The subject exhibited unusual signs of increased aggression during the experiment, leading to the containment breach. Frequencies began fluctuating at 02:55 AM, just moments before the anomaly escaped. Security personnel responded immediately but were unable to contain the incident.<br><br>
+            **Report Summary:**<br>
+            The testing process has gone according to plan, but I still find myself struggling with the implications of this project. My personal involvement with Ava has grown stronger, and I can't help but feel a sense of responsibility to her. She is key to the future of this project, even if I can't explain why.<br><br>
+
+            **Analysis of Ava's Situation:**<br>
+            Ava has been under constant surveillance, but her emotional state is fragile. She seems aware of the situation, yet she still asks questions about her purpose. I need to find a way to provide her with the best care while also keeping her unaware of the full scope of the project.<br><br>
+
+            **Incident Details:**<br>
+            Testing frequencies have been fluctuating more erratically. Ava seems to be reacting more strongly to the signals. I must monitor this closely.<br><br>
+
+            **Next Steps:**<br>
+            1. Keep Ava isolated for the time being.<br>
+            2. Investigate potential outside influences affecting the testing.<br>
+            3. Continue to refine the procedure until we get a definitive outcome.<br><br>
 
             **Notes:**<br>
-            1. Ensure tighter controls on frequency monitoring.<br>
-            2. Remember: The password is Ava-1994.<br>
-            3. Future logs will address unclassified elements.<br><br>
-            **Puzzle Hint:**<br>
-            - Be cautious of how you use the password. Certain records may unlock only after the right time has passed.<br><br>
-            The time difference between now and then could be the key.<br><br>
+            The subject’s health continues to deteriorate at an alarming rate. I’ve spoken with the higher-ups about potential options, but for now, I’m tasked with keeping her stable.<br><br>
 
-            **Additional Notes:**<br>
-            Following the anomaly's escape, all personnel were immediately evacuated. Access to this document is restricted until certain criteria are met. Please reference the frequency logs for more details.<br><br>
-            **Emergency Protocol:**<br>
-            Proceed with extreme caution when handling classified data. Unauthorized access will result in immediate termination of clearance.<br><br>
+            **Additional Instructions:**<br>
+            I must ensure that all data regarding Ava’s status remains confidential. She deserves the best, and I’m doing everything I can to ensure that happens.<br><br>
 
             **End of Document**
         </p>
@@ -216,6 +235,7 @@
         const loadingText = document.getElementById("loading");
         const loginError = document.getElementById("login-error");
         const loginForm = document.getElementById("login-form");
+        const accountName = document.getElementById("account-name");
 
         // Function to update military time
         function updateTime() {
@@ -223,35 +243,22 @@
             let hours = now.getHours();
             let minutes = now.getMinutes();
             let seconds = now.getSeconds();
-
-            hours = hours < 10 ? '0' + hours : hours;
-            minutes = minutes < 10 ? '0' + minutes : minutes;
-            seconds = seconds < 10 ? '0' + seconds : seconds;
-            greyTime.innerText = `${hours}:${minutes}:${seconds}`;
+            hours = hours < 10 ? "0" + hours : hours;
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+            greyTime.textContent = `${hours}:${minutes}:${seconds}`;
         }
-
+        
         setInterval(updateTime, 1000);
 
-        // Simulate the loading process
-        function showLoading() {
-            loadingText.classList.remove("hidden");
-            setTimeout(function() {
-                loadingText.classList.add("hidden");
-                loginContainer.style.opacity = 1;
-                loginContainer.classList.remove("hidden");
-                blurBackground.style.filter = "blur(5px)";
-            }, 1500);
-        }
-
-        // Show login page when user clicks anywhere
+        // Show login page when clicked anywhere
         document.body.addEventListener("click", function() {
-            if (loginContainer.style.display !== "block") {
-                showLoading();
-                loginContainer.style.display = "block";
-            }
+            loginContainer.classList.remove("hidden");
+            loginContainer.classList.add("fade");
+            blurBackground.style.filter = "blur(5px)";
         });
 
-        // Open document when clicked
+        // Show document modal
         documentButton.addEventListener("click", function() {
             documentModal.style.display = "block";
             loginContainer.style.filter = "blur(5px)";
@@ -269,7 +276,7 @@
             const username = document.getElementById("username").value;
             const password = document.getElementById("password").value;
 
-            if (username === "admin" && password === "Ava-1994") {
+            if (username === "Bob Williams" && password === "Ava-1994") {
                 loginError.classList.add("hidden");
                 alert("Login successful!");
                 // Implement further logic here if needed
@@ -277,6 +284,13 @@
                 loginError.classList.remove("hidden");
             }
         });
+
+        // Simulate loading delay
+        setTimeout(function() {
+            loginContainer.classList.remove("hidden");
+            loadingText.classList.add("hidden");
+        }, 1500);
+
     </script>
 
 </body>
