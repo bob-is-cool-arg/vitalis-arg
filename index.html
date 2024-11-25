@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Screen</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
     <style>
         body {
             margin: 0;
@@ -15,6 +15,7 @@
             background-position: center;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: #fff;
+            overflow: hidden; /* Disable body scroll */
         }
 
         /* Time Display */
@@ -72,7 +73,8 @@
             width: 400px;
             text-align: center;
             z-index: 3;
-            backdrop-filter: blur(8px);
+            backdrop-filter: blur(8px); /* Blurs the background when the login page is open */
+            display: none;
         }
 
         .login-container input {
@@ -120,8 +122,10 @@
             text-align: left;
             line-height: 1.5;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(8px);
-            font-family: 'Dancing Script', cursive; /* Cursive font */
+            backdrop-filter: blur(8px); /* Blurs login page when document is open */
+            font-family: 'Pacifico', cursive; /* Messy cursive font */
+            max-height: 70vh;
+            overflow-y: scroll; /* Make the document scrollable */
         }
 
         .document-header {
@@ -147,7 +151,7 @@
         <span id="time-text"></span>
     </div>
     <div class="loading-screen" id="loading-screen">Loading...</div>
-    <div class="login-container hidden" id="login-container">
+    <div class="login-container" id="login-container">
         <div class="login-header">Login</div>
         <form id="login-form">
             <input type="text" id="username" placeholder="Username" required>
@@ -215,7 +219,7 @@
             loadingScreen.style.display = "flex";
             setTimeout(() => {
                 loadingScreen.style.display = "none";
-                loginContainer.classList.remove("hidden");
+                loginContainer.style.display = "block";
             }, 2000); // 2-second loading screen
         }, { once: true });
 
@@ -232,19 +236,19 @@
         };
 
         // Open and close document modal
-        const documentLink = document.getElementById('document-link');
-        const documentContainer = document.getElementById('document-container');
-        const closeButton = document.getElementById('close-button');
+        const documentLink = document.getElementById("document-link");
+        const documentContainer = document.getElementById("document-container");
+        const closeButton = document.getElementById("close-button");
 
         documentLink.onclick = function (e) {
             e.preventDefault();
             documentContainer.style.display = 'block';
-            document.getElementById('login-container').style.filter = "blur(5px)";
+            loginContainer.style.filter = "blur(5px)";
         };
 
         closeButton.onclick = function () {
             documentContainer.style.display = 'none';
-            document.getElementById('login-container').style.filter = "none";
+            loginContainer.style.filter = "none";
         };
     </script>
 </body>
