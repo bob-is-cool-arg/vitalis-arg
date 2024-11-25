@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Screen</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400&display=swap" rel="stylesheet">
     <style>
         body {
             margin: 0;
@@ -15,15 +16,36 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: #fff;
         }
+
+        /* Time Display */
         .time-display {
             position: absolute;
             top: 50%;
             left: 5%;
             transform: translateY(-50%);
-            font-size: 50px;
+            font-size: 70px;
             font-weight: bold;
             color: #ffffff;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.6);
         }
+
+        .time-display span {
+            position: relative;
+            display: inline-block;
+        }
+
+        .time-display span::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background-color: rgba(128, 128, 128, 0.7);
+            z-index: 1;
+        }
+
+        /* Login Screen */
         .loading-screen {
             position: fixed;
             top: 0;
@@ -38,6 +60,7 @@
             align-items: center;
             z-index: 5;
         }
+
         .login-container {
             position: fixed;
             top: 20%;
@@ -49,7 +72,9 @@
             width: 400px;
             text-align: center;
             z-index: 3;
+            backdrop-filter: blur(8px);
         }
+
         .login-container input {
             width: 80%;
             padding: 10px;
@@ -59,14 +84,17 @@
             background-color: #222;
             color: white;
         }
+
         .login-container input:focus {
             outline: none;
             border-color: #77b5fe;
         }
+
         .login-header {
             font-size: 24px;
             margin-bottom: 20px;
         }
+
         .document-link {
             position: absolute;
             bottom: 10px;
@@ -75,6 +103,8 @@
             font-size: 12px;
             text-decoration: none;
         }
+
+        /* Document Modal */
         .document-container {
             position: fixed;
             top: 10%;
@@ -90,12 +120,16 @@
             text-align: left;
             line-height: 1.5;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(8px);
+            font-family: 'Dancing Script', cursive; /* Cursive font */
         }
+
         .document-header {
             font-size: 20px;
             margin-bottom: 10px;
             font-weight: bold;
         }
+
         .close-button {
             position: absolute;
             top: 10px;
@@ -104,11 +138,14 @@
             font-size: 18px;
             cursor: pointer;
         }
+
     </style>
 </head>
 <body>
     <!-- Initial Time-Only Screen -->
-    <div class="time-display" id="time-display"></div>
+    <div class="time-display" id="time-display">
+        <span id="time-text"></span>
+    </div>
     <div class="loading-screen" id="loading-screen">Loading...</div>
     <div class="login-container hidden" id="login-container">
         <div class="login-header">Login</div>
@@ -127,24 +164,31 @@
         <p><strong>Author:</strong> Bob Williams</p>
         <p><strong>Date:</strong> 04/29</p>
         <p>
-            The ongoing experiments have reached a critical phase. The progress is undeniable, but so are the risks. 
-            Last week’s incident still weighs heavily on me. Security protocols failed, and there was a breach. 
-            It's becoming harder to justify the cost of human life against what we’re trying to achieve.
+            The purpose of this document is to outline the progress and continuing risks surrounding the research 
+            project initiated under Vitalis Research's auspices. We have encountered both unprecedented breakthroughs 
+            and significant complications.
         </p>
         <p>
-            On a personal note, I’m reminded daily of my responsibilities as a father. Ava would be devastated if 
-            she understood the extent of my involvement in this project. Her name and birth year have become 
-            an ironic choice for security credentials: *Ava-1994.* It’s both a comfort and a reminder of what’s at stake.
+            The following research concerns the manipulation of human subjects, involving genetic experimentation, 
+            psychological stressors, and overall well-being monitoring. The project's nature is classified; however, 
+            I can state that we are pushing boundaries on what is humanly possible. The outcome could change the very 
+            fabric of human understanding, but not without cost.
         </p>
         <p>
-            I’ve kept her in the dark, but for how long? The weight of these secrets is unbearable. It’s clear that what 
-            we’ve created here is something far beyond our comprehension. The reports are troubling—subjects 
-            exhibiting unusual behaviors, the anomalies spreading outside our controlled environment.
+            The latest report indicates that one subject, identified by their codename "Ava," has demonstrated a 
+            remarkable tolerance to the adverse conditions. While the risks are evident, the subjects’ ability to 
+            endure these stressors gives us hope for future developments.
         </p>
         <p>
-            I’ve been reviewing old entries, trying to make sense of it all. How did we get here? What began as a quest 
-            for knowledge has turned into something much darker. If anyone finds this, please remember one thing: 
-            I did this for her. For Ava.
+            As noted in my earlier communications, the involvement of family has become a point of personal conflict. 
+            My daughter, Ava Williams, who was unknowingly entangled in this project, will never fully comprehend the 
+            extent of my involvement. I’ve kept this hidden from her, but the constant reminder of her name on the 
+            security system—“Ava-1994”—haunts me daily.
+        </p>
+        <p>
+            I must clarify that the future implications of this project far outweigh the personal cost. However, my 
+            priority remains her safety, and I must ensure that no harm comes her way. This document is my final warning 
+            to anyone who might take my place in this work—do not underestimate what we are creating here. 
         </p>
     </div>
 
@@ -152,11 +196,12 @@
         // Function to display current time
         function updateTime() {
             const timeDisplay = document.getElementById("time-display");
+            const timeText = document.getElementById("time-text");
             const now = new Date();
             const hours = String(now.getHours()).padStart(2, '0');
             const minutes = String(now.getMinutes()).padStart(2, '0');
             const seconds = String(now.getSeconds()).padStart(2, '0');
-            timeDisplay.textContent = `${hours}:${minutes}:${seconds}`;
+            timeText.textContent = `${hours}:${minutes}:${seconds}`;
         }
         setInterval(updateTime, 1000);
         updateTime();
@@ -191,14 +236,16 @@
         const documentContainer = document.getElementById('document-container');
         const closeButton = document.getElementById('close-button');
 
-        documentLink.addEventListener('click', function (e) {
+        documentLink.onclick = function (e) {
             e.preventDefault();
             documentContainer.style.display = 'block';
-        });
+            document.getElementById('login-container').style.filter = "blur(5px)";
+        };
 
-        closeButton.addEventListener('click', function () {
+        closeButton.onclick = function () {
             documentContainer.style.display = 'none';
-        });
+            document.getElementById('login-container').style.filter = "none";
+        };
     </script>
 </body>
 </html>
