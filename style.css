@@ -1,1 +1,118 @@
+/* General reset for margin and padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
+/* Full viewport height */
+html, body {
+    height: 100%;
+    font-family: Arial, sans-serif;
+}
+
+/* Background styles */
+#background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('desktop-background.jpg'); /* Use your provided background */
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+    transition: all 0.5s ease;
+}
+
+/* Desktop background initially shown */
+#desktop-background {
+    display: block;
+}
+
+/* The login screen container initially hidden */
+.login-container {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+}
+
+/* Login box styles */
+.login-box {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    width: 350px;
+    border-radius: 5px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.input-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.input-group label {
+    font-size: 14px;
+    color: #333;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 3px;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* Footer style */
+#footer {
+    margin-top: 20px;
+    font-size: 12px;
+    color: #888;
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+}
+
+#footer p {
+    margin: 0;
+}
+
+/* Smooth transition effects */
+.smooth-transition {
+    transition: all 1s ease;
+}
+
+/* Blurry background transition */
+.blurry-background {
+    filter: blur(8px);
+}
