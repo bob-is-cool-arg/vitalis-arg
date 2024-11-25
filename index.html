@@ -11,7 +11,6 @@
       padding: 0;
       height: 100vh;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #1f1f1f;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -26,16 +25,10 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background-image: url('https://github.com/bob-is-cool-arg/vitalis-arg/raw/main/desktop-background.jpg'); /* Replace with your own background image */
+      background-image: url('https://github.com/bob-is-cool-arg/vitalis-arg/raw/main/img_5baa173e71449.jpg'); /* Your background image */
       background-size: cover;
       background-position: center;
       z-index: -2;
-      transition: all 1s ease-in-out;
-    }
-
-    /* Blur Effect for Background */
-    .blur-background {
-      filter: blur(10px);
     }
 
     /* Login Box */
@@ -98,12 +91,16 @@
     /* Time and Date Styling */
     .time-date {
       position: absolute;
-      bottom: 10px;
+      bottom: 40px;
       left: 20px;
-      font-size: 14px;
+      font-size: 26px;
       color: #d0d0d0;
       z-index: 1;
       font-weight: bold;
+    }
+
+    .time-date p {
+      margin: 0;
     }
 
     /* Account Info Styling */
@@ -114,4 +111,64 @@
       font-size: 14px;
       color: #d0d0d0;
       z-index: 1;
-      font-wei
+      font-weight: bold;
+    }
+
+    /* Transition for smoother appearance */
+    .account-info p,
+    .time-date p {
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Image -->
+  <div class="background"></div>
+
+  <!-- Login Box -->
+  <div class="login-container">
+    <h2 style="color: white;">Sign in</h2>
+    <input type="text" id="username" placeholder="Username" />
+    <input type="password" id="password" placeholder="Password" />
+    <button onclick="login()">Sign In</button>
+  </div>
+
+  <!-- Time and Date -->
+  <div class="time-date">
+    <p>7:07</p>
+    <p>Tuesday, September 25</p>
+  </div>
+
+  <!-- Account Info -->
+  <div class="account-info">
+    <p>Bob Williams</p>
+  </div>
+
+  <script>
+    // Trigger background blur and display login container with delay
+    document.body.addEventListener('click', () => {
+      // Add the blur effect to the background
+      document.querySelector('.background').classList.add('blur-background'); 
+      // Show login container with delay and animation
+      setTimeout(() => {
+        document.querySelector('.login-container').classList.add('active'); // Show login form
+      }, 500); // Delay for smoother effect
+    });
+
+    // Simulate Login Check
+    function login() {
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      // Dummy login for demonstration purposes
+      if (username === "Bob Williams" && password === "password123") {
+        alert("Login successful!");
+      } else {
+        alert("Incorrect credentials.");
+      }
+    }
+  </script>
+
+</body>
+</html>
