@@ -5,34 +5,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login Page</title>
   <style>
-    /* Reset and apply basic body styles */
+    /* Reset body styles */
     body {
       margin: 0;
       padding: 0;
       height: 100vh;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #1f1f1f; /* Background Color */
       display: flex;
       justify-content: center;
       align-items: center;
       overflow: hidden;
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #1f1f1f; /* Dark background for contrast */
+      position: relative;
     }
 
-    /* Background setup */
+    /* Background Setup */
     .background {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background-image: url('https://github.com/bob-is-cool-arg/vitalis-arg/raw/main/desktop-background.jpg'); /* Replace with your own URL */
+      background-image: url('https://github.com/bob-is-cool-arg/vitalis-arg/raw/main/desktop-background.jpg'); /* Replace with actual path */
       background-size: cover;
       background-position: center;
       z-index: -2;
       transition: filter 1s ease-in-out;
     }
 
-    /* Transition for background blur effect */
+    /* Blur effect for background */
     .blur-background {
       filter: blur(10px); /* Apply blur when transitioning */
     }
@@ -41,25 +42,25 @@
     .login-container {
       position: absolute;
       background-color: rgba(0, 0, 0, 0.85);
-      padding: 30px;
-      border-radius: 10px;
       width: 400px;
+      padding: 30px;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      transform: scale(0);
+      border-radius: 10px;
       opacity: 0;
+      transform: scale(0);
       transition: transform 1s ease-in-out, opacity 1s ease-in-out;
     }
 
-    /* Active login container with smooth scaling and fade-in */
+    /* Active login box */
     .login-container.active {
       transform: scale(1);
       opacity: 1;
     }
 
-    /* Input styles */
+    /* Input Fields Styling */
     input {
       width: 80%;
       padding: 12px;
@@ -76,6 +77,7 @@
       border-color: #4CAF50;
     }
 
+    /* Button Styling */
     button {
       width: 80%;
       padding: 12px;
@@ -92,7 +94,7 @@
       background-color: #45a049;
     }
 
-    /* Time and Date in Bottom Left */
+    /* Time and Date Styling */
     .time-date {
       position: absolute;
       bottom: 10px;
@@ -100,9 +102,10 @@
       font-size: 14px;
       color: #d0d0d0;
       z-index: 1;
+      font-weight: bold;
     }
 
-    /* Account Name in Bottom Right */
+    /* Account Info Styling */
     .account-info {
       position: absolute;
       bottom: 10px;
@@ -110,9 +113,10 @@
       font-size: 14px;
       color: #d0d0d0;
       z-index: 1;
+      font-weight: bold;
     }
 
-    /* Transition for login box fade and scale */
+    /* Transition for smoother appearance */
     .account-info p,
     .time-date p {
       margin: 0;
@@ -122,13 +126,10 @@
 </head>
 <body>
 
-  <!-- Background Image with Transition Effects -->
+  <!-- Background Image -->
   <div class="background"></div>
 
-  <!-- Transition Effect when Login Form Appears -->
-  <div class="transition"></div>
-
-  <!-- Login Form -->
+  <!-- Login Box -->
   <div class="login-container">
     <h2 style="color: white;">Sign in</h2>
     <input type="text" id="username" placeholder="Username" />
@@ -136,31 +137,32 @@
     <button onclick="login()">Sign In</button>
   </div>
 
-  <!-- Account Info and Date/Time Positioning -->
-  <div class="account-info">
-    <p>Bob Williams</p>
-  </div>
-
+  <!-- Time and Date -->
   <div class="time-date">
     <p>03:21:16</p>
     <p>4/1/2002</p>
   </div>
 
+  <!-- Account Info -->
+  <div class="account-info">
+    <p>Bob Williams</p>
+  </div>
+
   <script>
-    // Add a smooth background blur effect and transition when clicking
+    // Trigger background blur and display login container with delay
     document.body.addEventListener('click', () => {
-      document.querySelector('.background').classList.add('blur-background'); // Apply blur to background
+      document.querySelector('.background').classList.add('blur-background'); // Apply blur
       setTimeout(() => {
-        document.querySelector('.login-container').classList.add('active'); // Activate login container
-      }, 500); // Delay to make the transition smoother
+        document.querySelector('.login-container').classList.add('active'); // Show login box
+      }, 500); // Delay for smoother transition
     });
 
-    // Login function to simulate login (Add your own logic here)
+    // Simulate Login Check (Replace with your own logic)
     function login() {
       const username = document.getElementById('username').value;
       const password = document.getElementById('password').value;
 
-      // Simple check for username and password (replace with actual validation)
+      // Dummy credentials for demo purposes
       if (username === "Bob Williams" && password === "password123") {
         alert("Login successful!");
       } else {
