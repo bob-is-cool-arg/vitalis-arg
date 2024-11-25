@@ -3,221 +3,198 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Screen</title>
+    <title>ARG Login and Document</title>
     <style>
+        /* General Styles */
         body {
             margin: 0;
             padding: 0;
-            height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-image: url('https://github.com/bob-is-cool-arg/vitalis-arg/blob/main/desktop-background.jpg?raw=true');
             background-size: cover;
             background-position: center;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            height: 100vh;
+            overflow: hidden;
             color: #fff;
         }
 
+        /* Time and Date in Bottom-Right Corner */
+        .time-date {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #77b5fe;
+        }
+
+        /* Blur Effect for Background */
         .blur-background {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('https://github.com/bob-is-cool-arg/vitalis-arg/blob/main/desktop-background.jpg?raw=true');
-            background-size: cover;
-            background-position: center;
-            filter: blur(10px);
-            transition: filter 1s ease-in-out;
+            filter: none;
+            transition: filter 0.5s ease-in-out;
         }
 
+        /* Login Container */
         .login-container {
             position: fixed;
             top: 20%;
             left: 50%;
             transform: translateX(-50%);
-            background-color: rgba(0, 0, 0, 0.8);
-            padding: 40px;
+            background-color: rgba(0, 0, 0, 0.85);
+            padding: 30px;
             border-radius: 10px;
-            width: 400px;
+            width: 350px;
+            display: none;
             text-align: center;
             z-index: 2;
-            display: none;
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
         }
 
         .login-container input {
-            width: 80%;
+            width: 90%;
             padding: 10px;
             margin: 10px 0;
-            border: 1px solid #444;
+            border: none;
             border-radius: 5px;
-            background-color: #222;
+            background-color: #333;
             color: white;
         }
 
         .login-container input:focus {
             outline: none;
-            border-color: #77b5fe;
         }
 
-        .login-header {
-            font-size: 24px;
-            margin-bottom: 20px;
+        .login-container button {
+            background-color: #77b5fe;
+            color: black;
+            font-weight: bold;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
         }
 
-        .account-info {
-            position: absolute;
-            bottom: 20px;
-            left: 10px;
-            color: #77b5fe;
-            font-size: 14px;
-            font-weight: 400;
-        }
-
-        .account-info span {
-            font-weight: 600;
-        }
-
-        .time-date {
-            position: absolute;
-            left: 20px;
-            font-size: 28px;
-            font-weight: 600;
-            color: #77b5fe;
-            padding: 10px;
-            background-color: rgba(0, 0, 0, 0.6);
-        }
-
-        .fade {
-            opacity: 1;
-            transition: opacity 1s ease-in-out;
-        }
-
-        .fade.hidden {
-            opacity: 0;
-        }
-
+        /* Document Styles */
         .document {
             position: fixed;
-            top: 10%;
-            left: 10%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             background-color: white;
             padding: 20px;
-            width: 70%;
-            height: 80%;
+            width: 500px;
+            height: 700px;
             overflow-y: scroll;
+            font-family: 'Cursive', sans-serif;
+            font-size: 18px;
+            color: #333;
+            line-height: 1.5;
             border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
             display: none;
             z-index: 3;
         }
 
-        .document-content {
-            font-family: 'Cursive', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            font-size: 18px;
-            line-height: 1.5;
-            color: #333;
-            margin-bottom: 20px;
-        }
-
-        .document-header {
-            font-weight: bold;
+        .document .header {
             font-size: 24px;
+            font-weight: bold;
             margin-bottom: 15px;
         }
 
-        .document-footer {
+        .document .content {
+            margin-bottom: 20px;
+        }
+
+        .document .footer {
             font-size: 14px;
             color: #777;
             text-align: right;
         }
 
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-weight: bold;
+        }
     </style>
 </head>
-
 <body>
 
-    <div class="blur-background"></div>
+    <!-- Time and Date -->
+    <div class="time-date" id="timeDate">14:22  |  25/11/2024</div>
 
-    <!-- Time in military format, located at the left of the screen -->
-    <div class="time-date" id="timeDisplay">
-        14:22
+    <!-- Login Container -->
+    <div class="login-container" id="loginScreen">
+        <button class="close-btn" id="closeLogin">X</button>
+        <h2>Login</h2>
+        <input type="text" id="username" placeholder="Username">
+        <input type="password" id="password" placeholder="Password">
+        <button id="loginButton">Log In</button>
     </div>
 
-    <!-- Click to open login page -->
-    <script>
-        // Trigger to show login page and add the blur effect
-        document.body.onclick = function () {
-            document.getElementById('login-container').style.display = 'block';
-            document.querySelector('.blur-background').style.filter = 'blur(10px)';
-            document.getElementById('timeDisplay').style.display = 'block'; // Time stays visible
-            document.getElementById('login-container').style.opacity = 1;
-        };
-    </script>
-
-    <!-- Login Container (hidden until clicked) -->
-    <div class="login-container fade hidden" id="login-container">
-        <div class="login-header">Login</div>
-        <form id="login-form">
-            <input type="text" id="username" placeholder="Username" required>
-            <input type="password" id="password" placeholder="Password" required>
-            <input type="submit" value="Log In">
-        </form>
-        <div class="account-info">
-            <span>Account:</span> Bob Williams
-        </div>
-        <div class="time-date">
-            14:22<br>04/29/2002
-        </div>
-    </div>
-
-    <!-- Document that opens when a link is clicked in the login page -->
-    <div class="document" id="document" style="display: none;">
-        <div class="document-header">April 29th, 2002</div>
-        <div class="document-content">
+    <!-- Document Viewer -->
+    <div class="document" id="documentViewer">
+        <button class="close-btn" id="closeDocument">X</button>
+        <div class="header">April 29, 2002</div>
+        <div class="content">
             Dear Ava,
-
-            I hope this document finds you well. As your father, it is my utmost desire to provide the very best for you.
-            Over the years, I've worked tirelessly to ensure you have a future full of opportunities, and though our world
-            is ever-changing, I know you will thrive. 
-
-            I am writing to you today because there is something important I need you to know. You are special, Ava,
-            in ways no one else can understand. This letter is not just about you, it is about what I am doing to make
-            your future secure. The research, the experiments—it all ties into one thing: giving you a life that no one
-            can take away from you. I know there are risks, but risks are part of life. This will make you stronger.
-
-            Now, about the password to access your personal account—don't forget it. It's the key to everything I’ve
-            worked for. 
-
-            Keep this letter safe, and trust that everything I am doing is for you. You'll understand in time.
-
-            Best regards,
+            <br><br>
+            I hope this letter finds you in good spirits. As your father, I have always sought to provide you with the very best life has to offer.
+            Over the years, my work at Vitalis Research has been for one reason only: to ensure you have everything you deserve.
+            <br><br>
+            Some may question the choices I've made, but I know that this will all be worth it—for you. You are special in ways that words cannot describe.
+            The work I’m doing is for your future, and someday you’ll understand.
+            <br><br>
+            Keep this document safe. It holds more than just my words; it holds a piece of the truth.
+            <br><br>
+            Love always,
+            <br>
             Bob Williams
         </div>
-        <div class="document-footer">
-            Bob Williams <br> Director, Vitalis Research
-        </div>
+        <div class="footer">Bob Williams | Director, Vitalis Research</div>
     </div>
 
+    <!-- Script -->
     <script>
-        // Display document when a user clicks on the "account-info" link
-        document.querySelector('.account-info').onclick = function () {
-            document.querySelector('.login-container').style.display = 'none';
-            document.querySelector('.document').style.display = 'block';
-            document.querySelector('.blur-background').style.filter = 'blur(5px)';
+        const blurBackground = document.querySelector('.blur-background');
+        const loginScreen = document.getElementById('loginScreen');
+        const documentViewer = document.getElementById('documentViewer');
+
+        // Open Login Screen
+        document.body.onclick = () => {
+            loginScreen.style.display = 'block';
+            blurBackground.style.filter = 'blur(10px)';
         };
 
-        // Handle login form submission
-        document.getElementById('login-form').onsubmit = function (e) {
-            e.preventDefault();
-            var username = document.getElementById('username').value;
-            var password = document.getElementById('password').value;
+        // Close Login Screen
+        document.getElementById('closeLogin').onclick = (e) => {
+            e.stopPropagation();
+            loginScreen.style.display = 'none';
+            blurBackground.style.filter = 'none';
+        };
 
-            if (password === 'Ava-1994') {
-                alert('Login successful!');
-            } else {
-                alert('Incorrect password. Please try again.');
-            }
+        // Show Document Viewer
+        document.getElementById('loginButton').onclick = () => {
+            loginScreen.style.display = 'none';
+            documentViewer.style.display = 'block';
+        };
+
+        // Close Document Viewer
+        document.getElementById('closeDocument').onclick = () => {
+            documentViewer.style.display = 'none';
+            blurBackground.style.filter = 'none';
         };
     </script>
 
