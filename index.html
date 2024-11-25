@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vitalis Research Login</title>
+    <style>
+        /* General reset and styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://github.com/bob-is-cool-arg/vitalis-arg/blob/main/desktop-background.jpg?raw=true');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+            color: white;
+        }
+        /* Full-screen cover for background */
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1;
+        }
+
+        /* Date and Time in the top-left */
+        .datetime {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 14px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        /* Container for Login Form */
+        .login-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.7);
+            padding: 30px;
+            border-radius: 8px;
+            width: 400px;
+            display: none; /* Start with login hidden */
+            z-index: 10;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.8);
+        }
+
+        .login-container.show {
+            display: block;
+        }
+
+        /* Form Elements */
+        .login-container input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            background-color: #333;
+            border: 1px solid #444;
+            border-radius: 5px;
+            color: white;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .login-container input:focus {
+            border-color: #007bff;
+        }
+
+        .login-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .login-container button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Animation for blur effect */
+        .blurred-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.9);
+            filter: blur(10px);
+            z-index: 5;
+            transition: filter 0.5s ease;
+        }
+
+        /* Login box details on bottom right */
+        .account-info {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            font-size: 12px;
+            font-family: 'Courier New', Courier, monospace;
+            color: white;
+        }
+
+        /* Transition effect for login popup */
+        .login-container,
+        .blurred-background {
+            opacity: 0;
+            transform: scale(0.5);
+            transition: all 0.5s ease-out;
+        }
+
+        .login-container.show,
+        .blurred-background.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Background image container -->
+    <div class="background"></div>
+
+    <!-- Date/Time container -->
+    <div class="datetime">
+        03:21:16 <br>
+        4/1/2002
+    </div>
+
+    <!-- Blurred background that appears when transitioning to the login screen -->
+    <div class="blurred-background"></div>
+
+    <!-- Login container -->
+    <div class="login-container">
+        <h2 style="text-align:center;">Login</h2>
+        <form action="" method="POST">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <button type="submit">Log In</button>
+        </form>
+        <div class="account-info">
+            <span>Account: Bob Williams</span>
+        </div>
+    </div>
+
+    <script>
+        // Trigger the transition to the login screen after a short delay
+        document.body.addEventListener("click", function() {
+            document.querySelector(".blurred-background").classList.add("show");
+            document.querySelector(".login-container").classList.add("show");
+        });
+    </script>
+</body>
+</html>
