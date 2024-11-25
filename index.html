@@ -3,49 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Login</title>
+    <title>Interactive Login - Vitalis Research</title>
     <style>
+        /* General Body Styles */
         body {
             margin: 0;
             padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             height: 100vh;
             background-image: url('https://github.com/bob-is-cool-arg/vitalis-arg/blob/main/desktop-background.jpg?raw=true');
             background-size: cover;
             background-position: center;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: #fff;
             display: flex;
             justify-content: center;
             align-items: center;
+            color: #fff;
+            position: relative;
             overflow: hidden;
         }
 
-        .blur-background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('https://github.com/bob-is-cool-arg/vitalis-arg/blob/main/desktop-background.jpg?raw=true');
-            background-size: cover;
-            background-position: center;
-            z-index: 0;
-            transition: filter 1s ease-in-out;
-        }
-
+        /* Time Display Style */
         .grey-time {
             position: fixed;
-            top: 50%;
+            top: 5%;
             left: 5%;
-            transform: translateY(-50%);
-            background: rgba(0, 0, 0, 0.5);
-            padding: 10px;
             font-size: 48px;
             font-weight: bold;
-            border-radius: 8px;
+            color: white;
             z-index: 1;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 10px;
         }
 
+        /* Login Page Styles */
         .login-container {
             position: fixed;
             top: 20%;
@@ -58,6 +49,8 @@
             text-align: center;
             z-index: 2;
             display: none;
+            opacity: 0;
+            transition: opacity 1s ease;
         }
 
         .login-container input {
@@ -75,6 +68,44 @@
             border-color: #77b5fe;
         }
 
+        .login-container input[type="submit"] {
+            background-color: #77b5fe;
+            color: white;
+            font-weight: bold;
+        }
+
+        .login-container input[type="submit"]:hover {
+            background-color: #559bb0;
+        }
+
+        /* Background Blur Effect */
+        .blur-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://github.com/bob-is-cool-arg/vitalis-arg/blob/main/desktop-background.jpg?raw=true');
+            background-size: cover;
+            background-position: center;
+            filter: blur(0);
+            z-index: 0;
+            transition: filter 1s ease;
+        }
+
+        /* Loading Animation */
+        .loading {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 20px;
+            color: white;
+            z-index: 999;
+            display: none;
+        }
+
+        /* Document Modal Styles */
         .document-button {
             position: absolute;
             bottom: 20px;
@@ -94,13 +125,13 @@
             height: 80%;
             background: white;
             color: black;
-            overflow-y: auto;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            font-family: 'Dancing Script', cursive; /* Handwriting font */
+            font-family: 'Dancing Script', cursive;
             display: none;
             z-index: 4;
+            overflow-y: auto;
         }
 
         .fade {
@@ -111,22 +142,44 @@
         .fade.hidden {
             opacity: 0;
         }
+
+        /* Scrollable document style */
+        .document-modal p {
+            white-space: pre-wrap;
+            line-height: 1.6;
+        }
+
+        /* Error Messages */
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
     </style>
 </head>
 <body>
-    <div class="blur-background" id="blur-background"></div>
-    <div class="grey-time" id="grey-time">03:21:16</div>
 
+    <!-- Background and Time -->
+    <div class="blur-background" id="blur-background"></div>
+    <div class="grey-time" id="grey-time">00:00</div>
+
+    <!-- Loading Screen -->
+    <div class="loading hidden" id="loading">Loading...</div>
+
+    <!-- Login Page -->
     <div class="login-container fade hidden" id="login-container">
-        <div class="login-header">Login</div>
+        <h2>Login to Vitalis Research</h2>
         <form id="login-form">
-            <input type="text" id="username" placeholder="Username" required>
-            <input type="password" id="password" placeholder="Password" required>
+            <input type="text" id="username" placeholder="Enter Username" required>
+            <input type="password" id="password" placeholder="Enter Password" required>
             <input type="submit" value="Log In">
+            <div class="error hidden" id="login-error">Incorrect credentials. Please try again.</div>
         </form>
         <div class="document-button" id="document-button">View Document</div>
     </div>
 
+    <!-- Document Modal -->
     <div class="document-modal" id="document-modal">
         <h2>Incident Report - Vitalis Research</h2>
         <p>
@@ -140,7 +193,17 @@
             **Notes:**<br>
             1. Ensure tighter controls on frequency monitoring.<br>
             2. Remember: The password is Ava-1994.<br>
-            3. Future logs will address unclassified elements.
+            3. Future logs will address unclassified elements.<br><br>
+            **Puzzle Hint:**<br>
+            - Be cautious of how you use the password. Certain records may unlock only after the right time has passed.<br><br>
+            The time difference between now and then could be the key.<br><br>
+
+            **Additional Notes:**<br>
+            Following the anomaly's escape, all personnel were immediately evacuated. Access to this document is restricted until certain criteria are met. Please reference the frequency logs for more details.<br><br>
+            **Emergency Protocol:**<br>
+            Proceed with extreme caution when handling classified data. Unauthorized access will result in immediate termination of clearance.<br><br>
+
+            **End of Document**
         </p>
     </div>
 
@@ -150,23 +213,71 @@
         const greyTime = document.getElementById("grey-time");
         const documentButton = document.getElementById("document-button");
         const documentModal = document.getElementById("document-modal");
+        const loadingText = document.getElementById("loading");
+        const loginError = document.getElementById("login-error");
+        const loginForm = document.getElementById("login-form");
 
-        document.body.addEventListener("click", function () {
+        // Function to update military time
+        function updateTime() {
+            const now = new Date();
+            let hours = now.getHours();
+            let minutes = now.getMinutes();
+            let seconds = now.getSeconds();
+
+            hours = hours < 10 ? '0' + hours : hours;
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+            greyTime.innerText = `${hours}:${minutes}:${seconds}`;
+        }
+
+        setInterval(updateTime, 1000);
+
+        // Simulate the loading process
+        function showLoading() {
+            loadingText.classList.remove("hidden");
+            setTimeout(function() {
+                loadingText.classList.add("hidden");
+                loginContainer.style.opacity = 1;
+                loginContainer.classList.remove("hidden");
+                blurBackground.style.filter = "blur(5px)";
+            }, 1500);
+        }
+
+        // Show login page when user clicks anywhere
+        document.body.addEventListener("click", function() {
             if (loginContainer.style.display !== "block") {
+                showLoading();
                 loginContainer.style.display = "block";
-                blurBackground.style.filter = "blur(10px)";
             }
         });
 
-        documentButton.addEventListener("click", function () {
+        // Open document when clicked
+        documentButton.addEventListener("click", function() {
             documentModal.style.display = "block";
-            loginContainer.style.filter = "blur(10px)";
+            loginContainer.style.filter = "blur(5px)";
         });
 
-        setInterval(() => {
-            const now = new Date();
-            greyTime.innerText = now.toLocaleTimeString();
-        }, 1000);
+        // Close document modal
+        documentModal.addEventListener("click", function() {
+            documentModal.style.display = "none";
+            loginContainer.style.filter = "none";
+        });
+
+        // Simulate login
+        loginForm.addEventListener("submit", function(e) {
+            e.preventDefault();
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            if (username === "admin" && password === "Ava-1994") {
+                loginError.classList.add("hidden");
+                alert("Login successful!");
+                // Implement further logic here if needed
+            } else {
+                loginError.classList.remove("hidden");
+            }
+        });
     </script>
+
 </body>
 </html>
