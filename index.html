@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Screen</title>
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <title>Interactive Login</title>
     <style>
         body {
             margin: 0;
@@ -13,50 +12,52 @@
             background-image: url('https://github.com/bob-is-cool-arg/vitalis-arg/blob/main/desktop-background.jpg?raw=true');
             background-size: cover;
             background-position: center;
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
         }
 
-        /* Time Display */
-        .time-display {
-            position: absolute;
+        .blur-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://github.com/bob-is-cool-arg/vitalis-arg/blob/main/desktop-background.jpg?raw=true');
+            background-size: cover;
+            background-position: center;
+            z-index: 0;
+            transition: filter 1s ease-in-out;
+        }
+
+        .grey-time {
+            position: fixed;
             top: 50%;
             left: 5%;
             transform: translateY(-50%);
-            font-size: 70px;
-            color: #ffffff;
-            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.6);
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            font-size: 48px;
+            font-weight: bold;
+            border-radius: 8px;
             z-index: 1;
         }
 
-        .time-display span {
-            position: relative;
-            display: inline-block;
-        }
-
-        .time-display span::after {
-            content: "";
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            right: 0;
-            height: 5px;
-            background-color: rgba(128, 128, 128, 0.7);
-            z-index: -1;
-        }
-
-        /* Login Screen */
         .login-container {
-            position: absolute;
+            position: fixed;
             top: 20%;
             left: 50%;
-            transform: translate(-50%, -50%);
+            transform: translateX(-50%);
             background-color: rgba(0, 0, 0, 0.8);
-            padding: 30px;
+            padding: 40px;
             border-radius: 10px;
             width: 400px;
             text-align: center;
             z-index: 2;
+            display: none;
         }
 
         .login-container input {
@@ -74,131 +75,98 @@
             border-color: #77b5fe;
         }
 
-        .document-link {
-            margin-top: 15px;
-            display: inline-block;
+        .document-button {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
             color: #77b5fe;
-            font-size: 12px;
-            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            z-index: 3;
         }
 
-        /* Document Modal */
-        .document-container {
+        .document-modal {
             position: fixed;
             top: 10%;
-            left: 50%;
-            transform: translate(-50%, 0);
-            background-color: white;
+            left: 5%;
+            width: 90%;
+            height: 80%;
+            background: white;
+            color: black;
+            overflow-y: auto;
             padding: 20px;
             border-radius: 10px;
-            width: 500px;
-            color: #000;
-            display: none;
-            z-index: 3;
-            text-align: left;
-            line-height: 1.5;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            font-family: 'Pacifico', cursive;
-            font-weight: 400; /* Adjust font weight */
-            max-height: 70vh;
-            overflow-y: auto; /* Scrollable document */
-        }
-
-        .document-header {
-            font-size: 20px;
-            margin-bottom: 10px;
-            font-weight: bold;
-        }
-
-        .close-button {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            color: #333;
-            font-size: 18px;
-            cursor: pointer;
-        }
-
-        .loading-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
-            color: white;
-            font-size: 20px;
+            font-family: 'Dancing Script', cursive; /* Handwriting font */
             display: none;
-            justify-content: center;
-            align-items: center;
             z-index: 4;
+        }
+
+        .fade {
+            opacity: 1;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .fade.hidden {
+            opacity: 0;
         }
     </style>
 </head>
 <body>
-    <!-- Time Display -->
-    <div class="time-display" id="time-display">
-        <span id="time-text"></span>
-    </div>
+    <div class="blur-background" id="blur-background"></div>
+    <div class="grey-time" id="grey-time">03:21:16</div>
 
-    <!-- Login Container -->
-    <div class="login-container" id="login-container">
+    <div class="login-container fade hidden" id="login-container">
         <div class="login-header">Login</div>
         <form id="login-form">
             <input type="text" id="username" placeholder="Username" required>
             <input type="password" id="password" placeholder="Password" required>
             <input type="submit" value="Log In">
         </form>
-        <a href="#" class="document-link" id="document-link">View Document</a>
+        <div class="document-button" id="document-button">View Document</div>
     </div>
 
-    <!-- Document Modal -->
-    <div class="document-container" id="document-container">
-        <div class="document-header">Research Notes</div>
-        <div class="close-button" id="close-button">✖</div>
+    <div class="document-modal" id="document-modal">
+        <h2>Incident Report - Vitalis Research</h2>
         <p>
-            Notes on subject anomalies...
-            <!-- Add your puzzle or other text here -->
-        </p>
-        <p><strong>Puzzle:</strong> Search for the anomaly in this document...</p>
-    </div>
+            **Operator:** Bob Williams<br>
+            **Date:** 04/29/2002<br>
+            **Time:** 03:00:00<br><br>
 
-    <div class="loading-screen" id="loading-screen">Loading...</div>
+            **Summary:**<br>
+            The subject exhibited unusual signs of increased aggression during the experiment, leading to the containment breach. Frequencies began fluctuating at 02:55 AM, just moments before the anomaly escaped. Security personnel responded immediately but were unable to contain the incident.<br><br>
+
+            **Notes:**<br>
+            1. Ensure tighter controls on frequency monitoring.<br>
+            2. Remember: The password is Ava-1994.<br>
+            3. Future logs will address unclassified elements.
+        </p>
+    </div>
 
     <script>
-        // Function to display current time
-        function updateTime() {
-            const now = new Date();
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            document.getElementById("time-text").textContent = `${hours}:${minutes}`;
-        }
-        setInterval(updateTime, 1000);
-
+        const blurBackground = document.getElementById("blur-background");
         const loginContainer = document.getElementById("login-container");
-        const documentContainer = document.getElementById("document-container");
-        const loadingScreen = document.getElementById("loading-screen");
+        const greyTime = document.getElementById("grey-time");
+        const documentButton = document.getElementById("document-button");
+        const documentModal = document.getElementById("document-modal");
 
-        document.body.addEventListener("click", () => {
-            loadingScreen.style.display = "flex";
-            setTimeout(() => {
-                loadingScreen.style.display = "none";
+        document.body.addEventListener("click", function () {
+            if (loginContainer.style.display !== "block") {
                 loginContainer.style.display = "block";
-            }, 3000);
+                blurBackground.style.filter = "blur(10px)";
+            }
         });
 
-        // Document opening
-        const documentLink = document.getElementById("document-link");
-        const closeButton = document.getElementById("close-button");
+        documentButton.addEventListener("click", function () {
+            documentModal.style.display = "block";
+            loginContainer.style.filter = "blur(10px)";
+        });
 
-        documentLink.onclick = function (e) {
-            e.preventDefault();
-            documentContainer.style.display = "block";
-        };
-
-        closeButton.onclick = function () {
-            documentContainer.style.display = "none";
-        };
+        setInterval(() => {
+            const now = new Date();
+            greyTime.innerText = now.toLocaleTimeString();
+        }, 1000);
     </script>
 </body>
 </html>
