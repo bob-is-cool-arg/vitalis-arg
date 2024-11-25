@@ -110,7 +110,7 @@
         .document-container {
             position: fixed;
             top: 10%;
-            left: 50%;
+            left: 40%; /* Adjusted to move document to the left */
             transform: translateX(-50%);
             background-color: white;
             padding: 20px;
@@ -126,6 +126,7 @@
             font-family: 'Pacifico', cursive; /* Messy cursive font */
             max-height: 70vh;
             overflow-y: scroll; /* Make the document scrollable */
+            font-weight: normal; /* Make text less bold for more pen-like appearance */
         }
 
         .document-header {
@@ -226,16 +227,16 @@
         // Handle login
         document.getElementById("login-form").onsubmit = function (e) {
             e.preventDefault();
-            const username = document.getElementById('username').value.trim();
-            const password = document.getElementById('password').value.trim();
-            if (username === 'BobWilliams' && password === 'Ava-1994') {
-                alert("Login Successful!");
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+            if (username === "admin" && password === "password") {
+                alert("Login successful");
             } else {
-                alert("Invalid credentials. Maybe the document can help?");
+                alert("Invalid credentials");
             }
         };
 
-        // Open and close document modal
+        // Show document when clicking on link
         const documentLink = document.getElementById("document-link");
         const documentContainer = document.getElementById("document-container");
         const closeButton = document.getElementById("close-button");
