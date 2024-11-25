@@ -1,137 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login Screen</title>
-  <style>
-    /* Basic Styles */
-    body {
-      font-family: Arial, sans-serif;
-      background: url('https://github.com/bob-is-cool-arg/vitalis-arg/blob/main/desktop-background.jpg') no-repeat center center fixed;
-      background-size: cover;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      color: #fff;
-    }
-
-    #login-container {
-      background-color: rgba(0, 0, 0, 0.8);
-      padding: 20px;
-      border-radius: 10px;
-      text-align: center;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    }
-
-    h2 {
-      margin-bottom: 20px;
-    }
-
-    input {
-      width: 80%;
-      padding: 10px;
-      margin: 10px 0;
-      border: none;
-      border-radius: 5px;
-    }
-
-    button {
-      padding: 10px 20px;
-      margin-top: 10px;
-      background-color: #3498db;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #2980b9;
-    }
-
-    .loader {
-      display: none;
-      margin: 20px auto;
-      border: 5px solid #f3f3f3;
-      border-top: 5px solid #3498db;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      animation: spin 2s linear infinite;
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    .glitch-effect {
-      animation: glitch 0.2s linear 1;
-    }
-
-    @keyframes glitch {
-      0% { transform: translate(2px, 0) skew(10deg); }
-      20% { transform: translate(-3px, 0) skew(-5deg); }
-      40% { transform: translate(3px, 0) skew(3deg); }
-      60% { transform: translate(-2px, 0) skew(8deg); }
-      80% { transform: translate(2px, 0) skew(-7deg); }
-      100% { transform: translate(0, 0) skew(0deg); }
-    }
-
-    .profile-pic {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      margin: 10px auto;
-      background-color: #ccc;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Screen</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background-image: url('https://github.com/bob-is-cool-arg/vitalis-arg/blob/main/desktop-background.jpg?raw=true');
+            background-size: cover;
+            background-position: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #fff;
+        }
+        /* Transition styles for blur effect */
+        .blur-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://github.com/bob-is-cool-arg/vitalis-arg/blob/main/desktop-background.jpg?raw=true');
+            background-size: cover;
+            background-position: center;
+            filter: blur(10px);
+            transition: filter 1s ease-in-out;
+        }
+        .login-container {
+            position: fixed;
+            top: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 40px;
+            border-radius: 10px;
+            width: 400px;
+            text-align: center;
+            z-index: 2;
+        }
+        .login-container input {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #444;
+            border-radius: 5px;
+            background-color: #222;
+            color: white;
+        }
+        .login-container input:focus {
+            outline: none;
+            border-color: #77b5fe;
+        }
+        .login-header {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .account-info {
+            position: absolute;
+            bottom: 20px;
+            left: 10px;
+            color: #77b5fe;
+            font-size: 14px;
+            font-weight: 400;
+        }
+        .account-info span {
+            font-weight: 600;
+        }
+        /* Time and Date style */
+        .time-date {
+            position: absolute;
+            bottom: 20px;
+            right: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #77b5fe;
+        }
+        /* Simple animation for transition */
+        .fade {
+            opacity: 1;
+            transition: opacity 1s ease-in-out;
+        }
+        .fade.hidden {
+            opacity: 0;
+        }
+        /* Profile Picture */
+        .profile-picture {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: #444;
+            margin: 10px auto;
+            display: block;
+            background-image: url('https://via.placeholder.com/80');
+            background-size: cover;
+            background-position: center;
+        }
+        /* Glitch effect */
+        .glitch {
+            animation: glitch 0.3s infinite;
+        }
+        @keyframes glitch {
+            0%, 100% {
+                transform: none;
+            }
+            50% {
+                transform: skew(10deg, 5deg);
+            }
+        }
+        /* Puzzle Hint */
+        .hint {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #ccc;
+            text-align: left;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .hint span {
+            color: #77b5fe;
+        }
+    </style>
 </head>
 <body>
+    <div class="blur-background"></div>
+    <!-- Login Container -->
+    <div class="login-container fade hidden" id="login-container">
+        <div class="login-header">Login</div>
+        <div class="profile-picture"></div>
+        <form id="login-form">
+            <input type="text" id="username" placeholder="Username" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <input type="submit" value="Log In">
+        </form>
+        <div class="account-info">
+            <span>Account:</span> Bob Williams 
+        </div>
+        <div class="time-date"> 03:21:16<br>4/1/2002 </div>
+        <div class="hint">
+            <strong>Hint:</strong> The password is the name of the founder's daughter <span>(3 letters)</span> 
+            and the year <span>(4 digits)</span> she was born.
+        </div>
+    </div>
+    <script>
+        // Function to start the login screen transition
+        setTimeout(function() {
+            // Add transition effect for the login form
+            document.querySelector('.blur-background').style.filter = 'blur(0)';
+            document.getElementById('login-container').classList.remove('hidden');
+        }, 3000); // 3-second delay for effect
 
-<div id="login-container">
-  <img src="https://github.com/bob-is-cool-arg/vitalis-arg/blob/main/Default_pfp.svg.png" alt="Default Profile Picture" class="profile-pic">
-  <h2>Log In</h2>
-  <form id="login-form">
-    <input type="text" id="username" placeholder="Username" required><br>
-    <input type="password" id="password" placeholder="Password" required><br>
-    <button type="submit">Login</button>
-  </form>
-  <div class="loader" id="loader"></div>
-</div>
+        // Simulate login button click with a puzzle challenge
+        document.getElementById('login-form').onsubmit = function (e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            if (username === 'BobWilliams' && password === 'Ava-1994') {
+                simulateLoading(() => alert("Login Successful!"));
+            } else {
+                alert("Invalid credentials. Check the hint!");
+            }
+        };
 
-<script>
-  document.getElementById("login-form").addEventListener("submit", function(event) {
-    event.preventDefault();
-
-    const username = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
-    const correctPassword = "puzzle2024"; // The puzzle password
-    const loader = document.getElementById("loader");
-    const loginContainer = document.getElementById("login-container");
-
-    // Show loader and simulate delay
-    loader.style.display = "block";
-
-    setTimeout(() => {
-      loader.style.display = "none";
-
-      if (password === correctPassword) {
-        // Apply glitch effect before proceeding
-        loginContainer.classList.add("glitch-effect");
-        setTimeout(() => {
-          alert("Login successful!"); // Placeholder for transitioning to next screen
-        }, 500); // Glitch effect duration
-      } else {
-        alert("Incorrect password. Please try again.");
-      }
-    }, 2000); // Simulated loading time
-  });
-</script>
-
+        // Simulate loading effect
+        function simulateLoading(callback) {
+            const loginContainer = document.getElementById('login-container');
+            loginContainer.classList.add('glitch');
+            setTimeout(() => {
+                loginContainer.classList.remove('glitch');
+                callback();
+            }, 1500); // Glitch duration
+        }
+    </script>
 </body>
 </html>
