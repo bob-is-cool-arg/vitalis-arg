@@ -1,66 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login</title>
-  <style>
-    /* Global reset */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Screen</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="script.js"></script>
+</head>
+<body>
+    <!-- Background image -->
+    <div id="background"></div>
 
-    body {
-      background-image: url('YOUR_BACKGROUND_IMAGE_PATH'); /* Replace with your background image URL */
-      background-size: cover;
-      background-position: center;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
-    }
+    <!-- Desktop Background (hidden during transition) -->
+    <div id="desktop-background" class="background"></div>
 
-    /* Screen overlay and blur effect */
-    .overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(10px);
-    }
-
-    /* Login box */
-    .login-box {
-      background: rgba(255, 255, 255, 0.9);
-      border-radius: 10px;
-      padding: 20px;
-      width: 300px;
-      opacity: 0;
-      animation: fadeIn 1s forwards;
-      text-align: center;
-    }
-
-    /* Fade-in animation */
-    @keyframes fadeIn {
-      0% {
-        opacity: 0;
-        transform: scale(0.9);
-      }
-      100% {
-        opacity: 1;
-        transform: scale(1);
-      }
-    }
-
-    /* Username and password inputs */
-    .input-field {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 20px;
- 
+    <!-- Login Page (hidden initially) -->
+    <div id="login-container" class="login-container">
+        <div class="login-box">
+            <h1>Login</h1>
+            <form id="login-form">
+                <div class="input-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" placeholder="Username" required>
+                </div>
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Password" required>
+                </div>
+                <button type="submit">Sign In</button>
+            </form>
+            <div id="footer">
+                <p id="date-time">03:21:16 - 4/1/2002</p>
+                <p id="account">Account: Bob Williams</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
