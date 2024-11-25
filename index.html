@@ -1,42 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Login - Vitalis Research</title>
+    <title>Login Screen</title>
     <style>
-        /* General Body Styles */
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             height: 100vh;
             background-image: url('https://github.com/bob-is-cool-arg/vitalis-arg/blob/main/desktop-background.jpg?raw=true');
             background-size: cover;
             background-position: center;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: #fff;
-            position: relative;
-            overflow: hidden;
         }
 
-        /* Time Display Style */
-        .grey-time {
+        .blur-background {
             position: fixed;
-            top: 5%;
-            left: 5%;
-            font-size: 50px;
-            font-weight: bold;
-            color: white;
-            z-index: 1;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 15px;
-            border-radius: 10px;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://github.com/bob-is-cool-arg/vitalis-arg/blob/main/desktop-background.jpg?raw=true');
+            background-size: cover;
+            background-position: center;
+            filter: blur(10px);
+            transition: filter 1s ease-in-out;
         }
 
-        /* Login Page Styles */
         .login-container {
             position: fixed;
             top: 20%;
@@ -49,8 +42,6 @@
             text-align: center;
             z-index: 2;
             display: none;
-            opacity: 0;
-            transition: opacity 1s ease;
         }
 
         .login-container input {
@@ -68,71 +59,32 @@
             border-color: #77b5fe;
         }
 
-        .login-container input[type="submit"] {
-            background-color: #77b5fe;
-            color: white;
-            font-weight: bold;
+        .login-header {
+            font-size: 24px;
+            margin-bottom: 20px;
         }
 
-        .login-container input[type="submit"]:hover {
-            background-color: #559bb0;
-        }
-
-        /* Background Blur Effect */
-        .blur-background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('https://github.com/bob-is-cool-arg/vitalis-arg/blob/main/desktop-background.jpg?raw=true');
-            background-size: cover;
-            background-position: center;
-            filter: blur(0);
-            z-index: 0;
-            transition: filter 1s ease;
-        }
-
-        /* Loading Animation */
-        .loading {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 20px;
-            color: white;
-            z-index: 999;
-            display: none;
-        }
-
-        /* Document Modal Styles */
-        .document-button {
+        .account-info {
             position: absolute;
             bottom: 20px;
-            left: 20px;
+            left: 10px;
             color: #77b5fe;
             font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            z-index: 3;
+            font-weight: 400;
         }
 
-        .document-modal {
-            position: fixed;
-            top: 10%;
-            left: 5%;
-            width: 90%;
-            height: 80%;
-            background: white;
-            color: black;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            font-family: 'Dancing Script', cursive;
-            display: none;
-            z-index: 4;
-            overflow-y: auto;
-            transform: rotate(0deg);
+        .account-info span {
+            font-weight: 600;
+        }
+
+        .time-date {
+            position: absolute;
+            left: 20px;
+            font-size: 28px;
+            font-weight: 600;
+            color: #77b5fe;
+            padding: 10px;
+            background-color: rgba(0, 0, 0, 0.6);
         }
 
         .fade {
@@ -144,154 +96,127 @@
             opacity: 0;
         }
 
-        /* Scrollable document style */
-        .document-modal p {
-            white-space: pre-wrap;
-            line-height: 1.6;
-            font-family: 'Segoe UI', sans-serif;
+        .document {
+            position: fixed;
+            top: 10%;
+            left: 10%;
+            background-color: white;
+            padding: 20px;
+            width: 70%;
+            height: 80%;
+            overflow-y: scroll;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            display: none;
         }
 
-        /* Error Messages */
-        .error {
-            color: red;
+        .document-content {
+            font-family: 'Cursive', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 18px;
+            line-height: 1.5;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .document-header {
+            font-weight: bold;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .document-footer {
             font-size: 14px;
-            margin-top: 10px;
-        }
-
-        /* Account Name */
-        .account-name {
-            position: absolute;
-            bottom: 5%;
-            right: 5%;
-            font-size: 12px;
-            color: #77b5fe;
-            z-index: 3;
+            color: #777;
+            text-align: right;
         }
 
     </style>
 </head>
+
 <body>
 
-    <!-- Background and Time -->
-    <div class="blur-background" id="blur-background"></div>
-    <div class="grey-time" id="grey-time">00:00</div>
+    <div class="blur-background"></div>
 
-    <!-- Loading Screen -->
-    <div class="loading hidden" id="loading">Loading...</div>
-
-    <!-- Login Page -->
-    <div class="login-container fade hidden" id="login-container">
-        <h2>Login to Vitalis Research</h2>
-        <form id="login-form">
-            <input type="text" id="username" placeholder="Enter Username" required>
-            <input type="password" id="password" placeholder="Enter Password" required>
-            <input type="submit" value="Log In">
-            <div class="error hidden" id="login-error">Incorrect credentials. Please try again.</div>
-        </form>
-        <div class="document-button" id="document-button">View Document</div>
+    <!-- Time in military format, located at the left of the screen -->
+    <div class="time-date" id="timeDisplay">
+        14:22
     </div>
 
-    <!-- Account Name (Bob Williams) -->
-    <div class="account-name" id="account-name">Bob Williams</div>
+    <!-- Click to open login page -->
+    <script>
+        document.body.onclick = function () {
+            document.getElementById('login-container').style.display = 'block';
+            document.querySelector('.blur-background').style.filter = 'blur(10px)';
+            document.getElementById('timeDisplay').style.display = 'none';
+        };
+    </script>
 
-    <!-- Document Modal -->
-    <div class="document-modal" id="document-modal">
-        <h2>Internal Report - Vitalis Research</h2>
-        <p>
-            **Operator:** Bob Williams<br>
-            **Date:** 04/29/2002<br>
-            **Time:** 03:00:00<br><br>
+    <!-- Login Container (hidden until clicked) -->
+    <div class="login-container fade hidden" id="login-container">
+        <div class="login-header">Login</div>
+        <form id="login-form">
+            <input type="text" id="username" placeholder="Username" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <input type="submit" value="Log In">
+        </form>
+        <div class="account-info">
+            <span>Account:</span> Bob Williams
+        </div>
+        <div class="time-date">
+            14:22<br>04/29/2002
+        </div>
+    </div>
 
-            **Report Summary:**<br>
-            The testing process has gone according to plan, but I still find myself struggling with the implications of this project. My personal involvement with Ava has grown stronger, and I can't help but feel a sense of responsibility to her. She is key to the future of this project, even if I can't explain why.<br><br>
+    <!-- Document that opens when a link is clicked in the login page -->
+    <div class="document" id="document" style="display: none;">
+        <div class="document-header">April 29th, 2002</div>
+        <div class="document-content">
+            Dear Ava,
 
-            **Analysis of Ava's Situation:**<br>
-            Ava has been under constant surveillance, but her emotional state is fragile. She seems aware of the situation, yet she still asks questions about her purpose. I need to find a way to provide her with the best care while also keeping her unaware of the full scope of the project.<br><br>
+            I hope this document finds you well. As your father, it is my utmost desire to provide the very best for you.
+            Over the years, I've worked tirelessly to ensure you have a future full of opportunities, and though our world
+            is ever-changing, I know you will thrive. 
 
-            **Incident Details:**<br>
-            Testing frequencies have been fluctuating more erratically. Ava seems to be reacting more strongly to the signals. I must monitor this closely.<br><br>
+            I am writing to you today because there is something important I need you to know. You are special, Ava,
+            in ways no one else can understand. This letter is not just about you, it is about what I am doing to make
+            your future secure. The research, the experiments—it all ties into one thing: giving you a life that no one
+            can take away from you. I know there are risks, but risks are part of life. This will make you stronger.
 
-            **Next Steps:**<br>
-            1. Keep Ava isolated for the time being.<br>
-            2. Investigate potential outside influences affecting the testing.<br>
-            3. Continue to refine the procedure until we get a definitive outcome.<br><br>
+            Now, about the password to access your personal account—don't forget it. It's the key to everything I’ve
+            worked for. 
 
-            **Notes:**<br>
-            The subject’s health continues to deteriorate at an alarming rate. I’ve spoken with the higher-ups about potential options, but for now, I’m tasked with keeping her stable.<br><br>
+            Keep this letter safe, and trust that everything I am doing is for you. You'll understand in time.
 
-            **Additional Instructions:**<br>
-            I must ensure that all data regarding Ava’s status remains confidential. She deserves the best, and I’m doing everything I can to ensure that happens.<br><br>
-
-            **End of Document**
-        </p>
+            Best regards,
+            Bob Williams
+        </div>
+        <div class="document-footer">
+            Bob Williams <br> Director, Vitalis Research
+        </div>
     </div>
 
     <script>
-        const blurBackground = document.getElementById("blur-background");
-        const loginContainer = document.getElementById("login-container");
-        const greyTime = document.getElementById("grey-time");
-        const documentButton = document.getElementById("document-button");
-        const documentModal = document.getElementById("document-modal");
-        const loadingText = document.getElementById("loading");
-        const loginError = document.getElementById("login-error");
-        const loginForm = document.getElementById("login-form");
-        const accountName = document.getElementById("account-name");
+        // Display document when a user clicks on the "account-info" link
+        document.querySelector('.account-info').onclick = function () {
+            document.querySelector('.login-container').style.display = 'none';
+            document.querySelector('.document').style.display = 'block';
+            document.querySelector('.blur-background').style.filter = 'blur(5px)';
+        };
 
-        // Function to update military time
-        function updateTime() {
-            const now = new Date();
-            let hours = now.getHours();
-            let minutes = now.getMinutes();
-            let seconds = now.getSeconds();
-            hours = hours < 10 ? "0" + hours : hours;
-            minutes = minutes < 10 ? "0" + minutes : minutes;
-            seconds = seconds < 10 ? "0" + seconds : seconds;
-            greyTime.textContent = `${hours}:${minutes}:${seconds}`;
-        }
-        
-        setInterval(updateTime, 1000);
-
-        // Show login page when clicked anywhere
-        document.body.addEventListener("click", function() {
-            loginContainer.classList.remove("hidden");
-            loginContainer.classList.add("fade");
-            blurBackground.style.filter = "blur(5px)";
-        });
-
-        // Show document modal
-        documentButton.addEventListener("click", function() {
-            documentModal.style.display = "block";
-            loginContainer.style.filter = "blur(5px)";
-        });
-
-        // Close document modal
-        documentModal.addEventListener("click", function() {
-            documentModal.style.display = "none";
-            loginContainer.style.filter = "none";
-        });
-
-        // Simulate login
-        loginForm.addEventListener("submit", function(e) {
+        // Handle login form submission
+        document.getElementById('login-form').onsubmit = function (e) {
             e.preventDefault();
-            const username = document.getElementById("username").value;
-            const password = document.getElementById("password").value;
+            var username = document.getElementById('username').value;
+            var password = document.getElementById('password').value;
 
-            if (username === "Bob Williams" && password === "Ava-1994") {
-                loginError.classList.add("hidden");
-                alert("Login successful!");
-                // Implement further logic here if needed
+            if (password === 'Ava-1994') {
+                alert('Login successful!');
             } else {
-                loginError.classList.remove("hidden");
+                alert('Incorrect password. Please try again.');
             }
-        });
-
-        // Simulate loading delay
-        setTimeout(function() {
-            loginContainer.classList.remove("hidden");
-            loadingText.classList.add("hidden");
-        }, 1500);
-
+        };
     </script>
 
 </body>
+
 </html>
