@@ -15,10 +15,10 @@
       justify-content: center;
       align-items: center;
       position: relative;
-      overflow: hidden;
+      background-color: #1a1a1a;
     }
 
-    /* Background Setup */
+    /* Background Image */
     .background {
       position: absolute;
       top: 0;
@@ -28,13 +28,14 @@
       background-image: url('https://github.com/bob-is-cool-arg/vitalis-arg/raw/main/img_5baa173e71449.jpg'); /* Your background image */
       background-size: cover;
       background-position: center;
+      filter: blur(5px);  /* Add slight blur effect like in your examples */
       z-index: -2;
     }
 
-    /* Login Box */
+    /* Login Box Styling */
     .login-container {
       position: absolute;
-      background-color: rgba(0, 0, 0, 0.85);
+      background-color: rgba(0, 0, 0, 0.75);
       width: 400px;
       padding: 20px;
       display: flex;
@@ -43,20 +44,27 @@
       align-items: center;
       border-radius: 10px;
       opacity: 0;
-      transform: scale(0);
+      transform: scale(0.7);
       transition: transform 1s ease-in-out, opacity 1s ease-in-out;
       z-index: 1;
     }
 
-    /* Active login container */
+    /* Active Login Container */
     .login-container.active {
       transform: scale(1);
       opacity: 1;
     }
 
+    /* Login Header */
+    h2 {
+      color: white;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
     /* Input Fields Styling */
     input {
-      width: 80%;
+      width: 100%;
       padding: 12px;
       margin: 10px 0;
       font-size: 16px;
@@ -73,7 +81,7 @@
 
     /* Button Styling */
     button {
-      width: 80%;
+      width: 100%;
       padding: 12px;
       font-size: 16px;
       background-color: #4CAF50;
@@ -119,6 +127,43 @@
     .time-date p {
       margin: 0;
     }
+
+    /* Create Loading Effect */
+    .loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.85);
+      color: white;
+      font-size: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+      visibility: hidden;
+    }
+
+    /* Time and Date centered positioning */
+    .time-date {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      font-size: 26px;
+      color: #d0d0d0;
+      font-weight: bold;
+    }
+
+    /* Button animation */
+    button {
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+    }
+
+    button.visible {
+      opacity: 1;
+    }
   </style>
 </head>
 <body>
@@ -126,12 +171,17 @@
   <!-- Background Image -->
   <div class="background"></div>
 
+  <!-- Loading Screen (Initial screen) -->
+  <div class="loading-overlay" id="loadingOverlay">
+    <span>Loading...</span>
+  </div>
+
   <!-- Login Box -->
-  <div class="login-container">
-    <h2 style="color: white;">Sign in</h2>
+  <div class="login-container" id="loginContainer">
+    <h2>Sign in</h2>
     <input type="text" id="username" placeholder="Username" />
     <input type="password" id="password" placeholder="Password" />
-    <button onclick="login()">Sign In</button>
+    <button id="signInButton" onclick="login()">Sign In</button>
   </div>
 
   <!-- Time and Date -->
@@ -146,22 +196,28 @@
   </div>
 
   <script>
-    // Trigger background blur and display login container with delay
-    document.body.addEventListener('click', () => {
-      // Add the blur effect to the background
-      document.querySelector('.background').classList.add('blur-background'); 
-      // Show login container with delay and animation
+    // Show loading screen initially
+    window.onload = () => {
+      document.getElementById('loadingOverlay').style.visibility = 'visible';
       setTimeout(() => {
-        document.querySelector('.login-container').classList.add('active'); // Show login form
-      }, 500); // Delay for smoother effect
+        document.getElementById('loadingOverlay').style.visibility = 'hidden';
+        document.getElementById('loginContainer').classList.add('active');
+      }, 2000); // Loading time effect
+    };
+
+    // Trigger login form animation
+    document.body.addEventListener('click', () => {
+      document.querySelector('.background').style.filter = 'blur(5px)';
+      setTimeout(() => {
+        document.querySelector('.login-container').classList.add('active');
+      }, 500);
     });
 
-    // Simulate Login Check
+    // Login functionality
     function login() {
       const username = document.getElementById('username').value;
       const password = document.getElementById('password').value;
 
-      // Dummy login for demonstration purposes
       if (username === "Bob Williams" && password === "password123") {
         alert("Login successful!");
       } else {
