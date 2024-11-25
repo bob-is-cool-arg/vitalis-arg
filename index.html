@@ -5,121 +5,162 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login Page</title>
   <style>
-    /* Apply background image */
+    /* Reset and apply basic body styles */
     body {
-      background-image: url('https://github.com/bob-is-cool-arg/vitalis-arg/raw/main/desktop-background.jpg'); /* Corrected background URL */
-      background-size: cover;
-      background-position: center;
       margin: 0;
+      padding: 0;
       height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
       overflow: hidden;
-      color: white;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #1f1f1f; /* Dark background for contrast */
     }
 
-    /* Smooth transition effect for login screen */
-    .transition {
+    /* Background setup */
+    .background {
       position: absolute;
       top: 0;
       left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: rgba(0, 0, 0, 0.8);
-      z-index: -1;
-      opacity: 0;
-      transition: opacity 0.5s ease-in-out;
+      width: 100%;
+      height: 100%;
+      background-image: url('https://github.com/bob-is-cool-arg/vitalis-arg/raw/main/desktop-background.jpg'); /* Replace with your own URL */
+      background-size: cover;
+      background-position: center;
+      z-index: -2;
+      transition: filter 1s ease-in-out;
     }
 
-    .transition.active {
+    /* Transition for background blur effect */
+    .blur-background {
+      filter: blur(10px); /* Apply blur when transitioning */
+    }
+
+    /* Main Login Box */
+    .login-container {
+      position: absolute;
+      background-color: rgba(0, 0, 0, 0.85);
+      padding: 30px;
+      border-radius: 10px;
+      width: 400px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transform: scale(0);
+      opacity: 0;
+      transition: transform 1s ease-in-out, opacity 1s ease-in-out;
+    }
+
+    /* Active login container with smooth scaling and fade-in */
+    .login-container.active {
+      transform: scale(1);
       opacity: 1;
     }
 
-    /* The login container */
-    .login-container {
-      position: absolute;
-      background-color: rgba(0, 0, 0, 0.9);
-      padding: 20px;
-      border-radius: 10px;
-      width: 400px;
-      height: 300px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-evenly;
-      align-items: center;
-      transform: scale(0);
-      transition: transform 0.7s ease-in-out;
-    }
-
-    .login-container.active {
-      transform: scale(1);
-    }
-
-    /* Input fields */
+    /* Input styles */
     input {
       width: 80%;
-      padding: 10px;
+      padding: 12px;
       margin: 10px 0;
-      border: none;
-      border-radius: 5px;
       font-size: 16px;
       background-color: #f1f1f1;
-      color: black;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      color: #333;
     }
 
-    /* Account information (bottom right) */
-    .account-info {
-      position: absolute;
-      bottom: 20px;
-      right: 20px;
-      font-size: 14px;
+    input:focus {
+      outline: none;
+      border-color: #4CAF50;
     }
 
-    /* Date and Time at the bottom left */
+    button {
+      width: 80%;
+      padding: 12px;
+      font-size: 16px;
+      background-color: #4CAF50;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    /* Time and Date in Bottom Left */
     .time-date {
       position: absolute;
-      bottom: 20px;
+      bottom: 10px;
       left: 20px;
       font-size: 14px;
+      color: #d0d0d0;
+      z-index: 1;
+    }
+
+    /* Account Name in Bottom Right */
+    .account-info {
+      position: absolute;
+      bottom: 10px;
+      right: 20px;
+      font-size: 14px;
+      color: #d0d0d0;
+      z-index: 1;
+    }
+
+    /* Transition for login box fade and scale */
+    .account-info p,
+    .time-date p {
+      margin: 0;
     }
 
   </style>
 </head>
 <body>
+
+  <!-- Background Image with Transition Effects -->
+  <div class="background"></div>
+
+  <!-- Transition Effect when Login Form Appears -->
   <div class="transition"></div>
-  
-  <!-- Login Container -->
+
+  <!-- Login Form -->
   <div class="login-container">
-    <h2>Login</h2>
+    <h2 style="color: white;">Sign in</h2>
     <input type="text" id="username" placeholder="Username" />
     <input type="password" id="password" placeholder="Password" />
     <button onclick="login()">Sign In</button>
   </div>
 
-  <!-- Account info and Time/Date -->
+  <!-- Account Info and Date/Time Positioning -->
   <div class="account-info">
     <p>Bob Williams</p>
   </div>
+
   <div class="time-date">
     <p>03:21:16</p>
     <p>4/1/2002</p>
   </div>
 
   <script>
-    // Handle transition to login page
+    // Add a smooth background blur effect and transition when clicking
     document.body.addEventListener('click', () => {
-      document.querySelector('.transition').classList.add('active');
+      document.querySelector('.background').classList.add('blur-background'); // Apply blur to background
       setTimeout(() => {
-        document.querySelector('.login-container').classList.add('active');
-      }, 500); // Delay for transition effect
+        document.querySelector('.login-container').classList.add('active'); // Activate login container
+      }, 500); // Delay to make the transition smoother
     });
 
-    // Dummy login function
+    // Login function to simulate login (Add your own logic here)
     function login() {
       const username = document.getElementById('username').value;
       const password = document.getElementById('password').value;
-      
+
+      // Simple check for username and password (replace with actual validation)
       if (username === "Bob Williams" && password === "password123") {
         alert("Login successful!");
       } else {
@@ -127,5 +168,6 @@
       }
     }
   </script>
+
 </body>
 </html>
