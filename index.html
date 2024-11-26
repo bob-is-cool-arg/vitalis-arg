@@ -3,265 +3,185 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Screen</title>
+    <title>Login Page</title>
     <style>
-        /* General Styling */
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Arial', sans-serif;
-            background-image: url('https://github.com/bob-is-cool-arg/vitalis-arg/blob/main/desktop-background.jpg?raw=true');
-            background-size: cover;
-            background-position: center;
             height: 100vh;
             display: flex;
-            align-items: center;
             justify-content: center;
+            align-items: center;
+            background-color: #1e1e1e;
+            font-family: Arial, sans-serif;
             overflow: hidden;
             position: relative;
         }
 
-        /* Time Display (Military Time) */
-        .time-display {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background-color: rgba(0, 0, 0, 0.6);
-            padding: 10px;
-            color: white;
-            font-size: 16px;
-            border-radius: 5px;
-            font-family: 'Courier New', Courier, monospace;
-        }
-
-        /* Time Display (Normal Time) */
-        .time-normal {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            background-color: rgba(0, 0, 0, 0.6);
-            padding: 10px;
-            color: white;
-            font-size: 16px;
-            border-radius: 5px;
-            font-family: 'Courier New', Courier, monospace;
-        }
-
-        /* Account Name Display */
-        .account-name {
-            position: absolute;
-            bottom: 30px;
-            right: 10px;
-            color: white;
-            font-size: 14px;
-            font-family: 'Courier New', Courier, monospace;
-        }
-
-        /* Loading Screen */
-        .loading-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: black;
-            color: white;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            z-index: 3;
-        }
-
-        /* Login Container */
+        /* Login container */
         .login-container {
-            background-color: rgba(0, 0, 0, 0.8);
-            padding: 40px;
             width: 400px;
+            padding: 40px;
+            background: rgba(0, 0, 0, 0.7);
             border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
             text-align: center;
-            display: none;
-            z-index: 2;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
         }
 
-        .login-container h2 {
+        .login-container h1 {
             color: white;
+            font-size: 2em;
             margin-bottom: 20px;
         }
 
         .login-container input {
-            width: 85%;
+            width: 80%;
             padding: 10px;
-            margin: 10px 0;
-            border: none;
+            margin-bottom: 10px;
             border-radius: 5px;
-            background-color: #222;
-            color: white;
-            outline: none;
+            border: none;
+            font-size: 1em;
+            color: #333;
+            background: #fff;
+            text-align: center;
         }
 
         .login-container button {
-            background-color: #4caf50;
-            color: black;
-            font-weight: bold;
-            padding: 10px 20px;
-            border: none;
+            width: 80%;
+            padding: 10px;
+            margin-top: 10px;
             border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease-in-out;
-        }
-
-        .login-container button:hover {
-            background-color: #77dd77;
-        }
-
-        /* Close Button */
-        .close-btn {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            font-size: 20px;
-            cursor: pointer;
+            background-color: #0078d4;
+            border: none;
             color: white;
-        }
-
-        /* Document Viewer */
-        .document {
-            background-color: white;
-            padding: 20px;
-            width: 600px;
-            height: 800px;
-            overflow-y: auto;
-            font-family: 'Georgia', serif;
-            font-size: 18px;
-            color: #333;
-            line-height: 1.6;
-            border-radius: 10px;
-            display: none;
-            z-index: 3;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
-        }
-
-        .document .header {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-
-        .document .close-btn {
-            position: absolute;
-            top: 10px;
-            right: 20px;
-            font-size: 18px;
+            font-size: 1em;
             cursor: pointer;
-            color: #777;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         }
 
-        .document .close-btn:hover {
-            color: black;
+        /* Time and Account Display */
+        .time-display {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            font-size: 14px;
+            color: white;
+            background: grey;
+            padding: 5px;
+            border-radius: 5px;
         }
 
-        .document .date {
-            text-align: center;
-            font-style: italic;
-        }
-
-        .page-number {
+        .account-display {
             position: absolute;
             bottom: 10px;
             right: 10px;
-            font-size: 12px;
-            color: #777;
+            font-size: 14px;
+            color: white;
+            background: grey;
+            padding: 5px;
+            border-radius: 5px;
+        }
+
+        /* Loading Screen */
+        .loading {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            visibility: hidden;
+        }
+
+        .loading span {
+            color: white;
+            font-size: 1.5em;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0;
+            }
+        }
+
+        /* Background image */
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://github.com/bob-is-cool-arg/vitalis-arg/blob/main/desktop-background.jpg') no-repeat center center fixed;
+            background-size: cover;
         }
     </style>
 </head>
 <body>
 
-    <!-- Time Displays -->
-    <div class="time-display" id="militaryTime"></div>
-    <div class="time-normal" id="normalTime"></div>
-    <div class="account-name">Account Name: Bob Williams</div>
+    <div class="background"></div>
 
-    <!-- Loading Screen -->
-    <div class="loading-screen" id="loadingScreen">
-        Loading...
+    <div class="login-container">
+        <h1>Sign In</h1>
+        <input type="text" id="username" placeholder="Username" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <button onclick="login()">Sign In</button>
     </div>
 
-    <!-- Login Container -->
-    <div class="login-container" id="loginScreen">
-        <span class="close-btn" id="closeLogin">X</span>
-        <h2>Welcome</h2>
-        <input type="text" id="username" placeholder="Username">
-        <input type="password" id="password" placeholder="Password">
-        <button id="loginButton">Log In</button>
+    <div class="loading" id="loading-screen">
+        <span>Loading...</span>
     </div>
 
-    <!-- Document Viewer -->
-    <div class="document" id="documentViewer">
-        <span class="close-btn" id="closeDocument">X</span>
-        <div class="header">Personal Journal - Entry #37</div>
-        <div class="date">September 12, 1994</div>
-        <p>
-            The days seem to blur together. The long shifts, the endless piles of paperwork, the constant pressure to perform. But the worst part... is not being able to spend time with Ava. 
-            She's 10 now, can you believe it? The time has passed so quickly, and yet, I feel like I've missed so much of it. I keep telling myself it's for her, that it's all for her future. But, I can't help but wonder... 
-            does she even know who I am anymore? She's growing up so fast, and I'm barely around to witness it. I wish I could be there more for her, but this job... it keeps pulling me away.
-            <br><br>
-            I can't stop thinking about her. I need to make this all worth it. For her.
-        </p>
-        <div class="page-number">Page 1</div>
-    </div>
+    <!-- Time and Account Info Displays -->
+    <div class="time-display" id="time-display">7:07 PM</div>
+    <div class="account-display" id="account-display">Account: Bob Williams</div>
 
     <script>
-        const loadingScreen = document.getElementById('loadingScreen');
-        const loginScreen = document.getElementById('loginScreen');
-        const documentViewer = document.getElementById('documentViewer');
-        const militaryTime = document.getElementById('militaryTime');
-        const normalTime = document.getElementById('normalTime');
+        let correctUsername = "Bob Williams";
+        let correctPassword = "Ava-1994";
 
-        // Update Time
-        function updateTime() {
-            const now = new Date();
-            const hours = now.getHours().toString().padStart(2, '0');
-            const minutes = now.getMinutes().toString().padStart(2, '0');
-            const seconds = now.getSeconds().toString().padStart(2, '0');
-            const normalTimeString = `${hours % 12 || 12}:${minutes}:${seconds} ${hours < 12 ? 'AM' : 'PM'}`;
-
-            militaryTime.innerHTML = `Military Time: ${hours}:${minutes}:${seconds}`;
-            normalTime.innerHTML = `${normalTimeString}`;
-        }
-        
-        setInterval(updateTime, 1000);
-
-        // Function to show loading screen
-        function showLoadingScreen(duration, callback) {
-            loadingScreen.style.display = 'flex';
-            setTimeout(() => {
-                loadingScreen.style.display = 'none';
-                if (callback) callback();
-            }, duration);
-        }
-
-        // Show Login Screen on Click Anywhere
-        document.body.addEventListener('click', () => {
-            if (loginScreen.style.display === 'none') {
-                showLoadingScreen(1500, () => loginScreen.style.display = 'block');
+        // Update time display every second
+        setInterval(function() {
+            let date = new Date();
+            let hours = date.getHours();
+            let minutes = date.getMinutes();
+            let period = "AM";
+            if (hours >= 12) {
+                period = "PM";
+                if (hours > 12) hours -= 12;
             }
-        });
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            let currentTime = hours + ":" + minutes + " " + period;
+            document.getElementById("time-display").innerText = currentTime;
+        }, 1000);
 
-        // Handle Login
-        const loginButton = document.getElementById('loginButton');
-        loginButton.addEventListener('click', () => {
-            showLoadingScreen(3000, () => {
-                loginScreen.style.display = 'none';
-                documentViewer.style.display = 'block';
-            });
-        });
+        // Display login loading screen
+        function showLoading() {
+            document.getElementById("loading-screen").style.visibility = "visible";
+        }
 
-        // Close Buttons
-        document.getElementById('closeLogin').addEventListener('click', () => loginScreen.style.display = 'none');
-        document.getElementById('closeDocument').addEventListener('click', () => documentViewer.style.display = 'none');
+        function hideLoading() {
+            document.getElementById("loading-screen").style.visibility = "hidden";
+        }
+
+        // Login logic
+        function login() {
+            showLoading();
+            setTimeout(function() {
+                let username = document.getElementById("username").value;
+                let password = document.getElementById("password").value;
+                if (username === correctUsername && password === correctPassword) {
+                    hideLoading();
+                    window.location.href = "desktop.html"; // Redirect to desktop page
+                } else {
+                    alert("Invalid credentials");
+                    hideLoading();
+                }
+            }, 2000); // Simulate loading time (2 seconds)
+        }
     </script>
 
 </body>
