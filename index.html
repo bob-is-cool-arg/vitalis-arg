@@ -3,33 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Login - Vitalis Research</title>
     <style>
-        /* General Reset */
         body, html {
             margin: 0;
             padding: 0;
             height: 100%;
             font-family: Arial, sans-serif;
-            background-color: #1e1e1e;
+            background-color: #1a1a1a;
             display: flex;
             justify-content: center;
             align-items: center;
+            position: relative;
         }
 
-        /* Main Login Container */
+        /* Main login container */
         .login-container {
-            width: 450px;
-            background: rgba(0, 0, 0, 0.7);
+            width: 350px;
+            background: rgba(0, 0, 0, 0.8);
             padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
             text-align: center;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
             z-index: 2;
+            position: relative;
         }
 
         .login-container h1 {
             color: white;
+            font-size: 24px;
             margin-bottom: 20px;
         }
 
@@ -42,15 +44,14 @@
             border: none;
             background-color: #fff;
             color: #333;
-            text-align: center;
         }
 
         .login-container button {
             width: 90%;
             padding: 10px;
-            font-size: 1.2em;
-            background-color: #0078d4;
+            background-color: #00A4E4;
             color: white;
+            font-size: 1.2em;
             border: none;
             border-radius: 5px;
             cursor: pointer;
@@ -58,19 +59,19 @@
         }
 
         .login-container button:hover {
-            background-color: #005a92;
+            background-color: #006B8F;
         }
 
-        /* Time Display (for Login Page and Desktop) */
+        /* Time Display */
         .time-display {
             position: absolute;
             bottom: 10px;
             left: 10px;
             font-size: 14px;
             color: white;
-            background: grey;
             padding: 5px;
             border-radius: 5px;
+            background-color: #333;
         }
 
         .account-display {
@@ -79,7 +80,7 @@
             right: 10px;
             font-size: 14px;
             color: white;
-            background: grey;
+            background: #333;
             padding: 5px;
             border-radius: 5px;
         }
@@ -110,18 +111,19 @@
             }
         }
 
-        /* Background image (to mimic Windows login) */
+        /* Background Image */
         .background {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('https://github.com/bob-is-cool-arg/vitalis-arg/blob/main/desktop-background.jpg') no-repeat center center fixed;
+            background: url('your-background-image-path.jpg') no-repeat center center fixed;
             background-size: cover;
+            z-index: 1;
         }
 
-        /* Full Screen Overlay (for Document Interaction) */
+        /* Document Overlay */
         .document-overlay {
             position: absolute;
             top: 0;
@@ -143,24 +145,21 @@
             width: 70%;
             max-width: 600px;
             border-radius: 10px;
-            overflow-y: auto;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            color: black;
+            font-size: 16px;
+            max-height: 80%;
+            overflow-y: auto;
         }
 
         .document-header {
-            font-size: 18px;
             font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .document-body {
-            font-size: 14px;
-            line-height: 1.6;
+            font-size: 18px;
+            margin-bottom: 15px;
         }
     </style>
 </head>
 <body>
-
     <!-- Background Image -->
     <div class="background"></div>
 
@@ -177,29 +176,29 @@
         <span>Loading...</span>
     </div>
 
-    <!-- Time and Account Info Displays -->
+    <!-- Time and Account Information -->
     <div class="time-display" id="time-display">7:07 PM</div>
     <div class="account-display" id="account-display">Account: Bob Williams</div>
 
-    <!-- Document Overlay (Appears After Login) -->
+    <!-- Document Overlay -->
     <div class="document-overlay" id="document-overlay">
         <div class="document-container">
-            <div class="document-header">Confidential Document</div>
+            <div class="document-header">Confidential Document - Bob Williams</div>
             <div class="document-body" id="document-content">
-                <!-- Document content goes here -->
+                <!-- Placeholder for the document's content -->
                 <p><strong>Date:</strong> September 25, 2004</p>
-                <p><strong>Note from Bob Williams:</strong> I wish I could spend more time with Ava... she's growing up so fast, and it's hard not being there for her. I know she misses me too... but I have to work hard to provide for her. Maybe I should take a day off soon... She's only 10, after all... </p>
+                <p><strong>Note:</strong> "I wish I could spend more time with Ava... she's growing up so fast, and it's hard not being there for her..."</p>
             </div>
         </div>
     </div>
 
     <script>
-        // Login Credentials
-        let correctUsername = "Bob Williams";
-        let correctPassword = "Ava-1994";
+        // Dummy credentials
+        const correctUsername = "Bob Williams";
+        const correctPassword = "Ava-1994";
 
-        // Time Update (Military Time on Login Page, Normal on Desktop)
-        setInterval(function() {
+        // Time update (Military Time during login)
+        setInterval(() => {
             let date = new Date();
             let hours = date.getHours();
             let minutes = date.getMinutes();
@@ -222,7 +221,7 @@
             document.getElementById("loading-screen").style.visibility = "hidden";
         }
 
-        // Login validation
+        // Login validation function
         function login() {
             showLoading();
             setTimeout(function() {
@@ -230,15 +229,15 @@
                 let password = document.getElementById("password").value;
                 if (username === correctUsername && password === correctPassword) {
                     hideLoading();
-                    window.location.href = "desktop.html"; // Redirect to desktop
+                    document.getElementById("document-overlay").style.visibility = "visible"; // Show document after login
                 } else {
-                    alert("Invalid credentials.");
+                    alert("Invalid credentials. Please try again.");
                     hideLoading();
                 }
             }, 2000); // Simulate loading time
         }
 
-        // Function to show document content
+        // Optional: Add function to interact with the document (if you need more interactivity)
         function showDocument() {
             document.getElementById("document-overlay").style.visibility = "visible";
         }
