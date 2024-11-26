@@ -14,10 +14,47 @@
             background-size: cover;
             background-position: center;
             height: 100vh;
-            overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Time Display (Military Time) */
+        .time-display {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 10px;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        /* Time Display (Normal Time) */
+        .time-normal {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 10px;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        /* Account Name Display */
+        .account-name {
+            position: absolute;
+            bottom: 30px;
+            right: 10px;
+            color: white;
+            font-size: 14px;
+            font-family: 'Courier New', Courier, monospace;
         }
 
         /* Loading Screen */
@@ -126,7 +163,11 @@
             color: black;
         }
 
-        /* Page Number */
+        .document .date {
+            text-align: center;
+            font-style: italic;
+        }
+
         .page-number {
             position: absolute;
             bottom: 10px;
@@ -137,6 +178,11 @@
     </style>
 </head>
 <body>
+
+    <!-- Time Displays -->
+    <div class="time-display" id="militaryTime"></div>
+    <div class="time-normal" id="normalTime"></div>
+    <div class="account-name">Account Name: Bob Williams</div>
 
     <!-- Loading Screen -->
     <div class="loading-screen" id="loadingScreen">
@@ -171,6 +217,22 @@
         const loadingScreen = document.getElementById('loadingScreen');
         const loginScreen = document.getElementById('loginScreen');
         const documentViewer = document.getElementById('documentViewer');
+        const militaryTime = document.getElementById('militaryTime');
+        const normalTime = document.getElementById('normalTime');
+
+        // Update Time
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const seconds = now.getSeconds().toString().padStart(2, '0');
+            const normalTimeString = `${hours % 12 || 12}:${minutes}:${seconds} ${hours < 12 ? 'AM' : 'PM'}`;
+
+            militaryTime.innerHTML = `Military Time: ${hours}:${minutes}:${seconds}`;
+            normalTime.innerHTML = `${normalTimeString}`;
+        }
+        
+        setInterval(updateTime, 1000);
 
         // Function to show loading screen
         function showLoadingScreen(duration, callback) {
@@ -183,35 +245,23 @@
 
         // Show Login Screen on Click Anywhere
         document.body.addEventListener('click', () => {
-            showLoadingScreen(1500, () => {
-                loginScreen.style.display = 'block';
-            });
-        });
-
-        // Close Login Screen
-        document.getElementById('closeLogin').addEventListener('click', () => {
-            loginScreen.style.display = 'none';
-        });
-
-        // Log In Button Logic
-        document.getElementById('loginButton').addEventListener('click', () => {
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-
-            if (username === 'Bob Williams' && password === 'Ava-1994') {
-                showLoadingScreen(2000, () => {
-                    loginScreen.style.display = 'none';
-                    documentViewer.style.display = 'block';
-                });
-            } else {
-                alert('Incorrect username or password');
+            if (loginScreen.style.display === 'none') {
+                showLoadingScreen(1500, () => loginScreen.style.display = 'block');
             }
         });
 
-        // Close Document Viewer
-        document.getElementById('closeDocument').addEventListener('click', () => {
-            documentViewer.style.display = 'none';
+        // Handle Login
+        const loginButton = document.getElementById('loginButton');
+        loginButton.addEventListener('click', () => {
+            showLoadingScreen(3000, () => {
+                loginScreen.style.display = 'none';
+                documentViewer.style.display = 'block';
+            });
         });
+
+        // Close Buttons
+        document.getElementById('closeLogin').addEventListener('click', () => loginScreen.style.display = 'none');
+        document.getElementById('closeDocument').addEventListener('click', () => documentViewer.style.display = 'none');
     </script>
 
 </body>
