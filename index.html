@@ -3,63 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
+    <title>Login</title>
     <style>
-        body {
+        /* General Reset */
+        body, html {
             margin: 0;
             padding: 0;
-            height: 100vh;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            background-color: #1e1e1e;
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #1e1e1e;
-            font-family: Arial, sans-serif;
-            overflow: hidden;
-            position: relative;
         }
 
-        /* Login container */
+        /* Main Login Container */
         .login-container {
-            width: 400px;
-            padding: 40px;
+            width: 450px;
             background: rgba(0, 0, 0, 0.7);
-            border-radius: 10px;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
             text-align: center;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            z-index: 2;
         }
 
         .login-container h1 {
             color: white;
-            font-size: 2em;
             margin-bottom: 20px;
         }
 
         .login-container input {
-            width: 80%;
+            width: 90%;
             padding: 10px;
             margin-bottom: 10px;
+            font-size: 1em;
             border-radius: 5px;
             border: none;
-            font-size: 1em;
+            background-color: #fff;
             color: #333;
-            background: #fff;
             text-align: center;
         }
 
         .login-container button {
-            width: 80%;
+            width: 90%;
             padding: 10px;
-            margin-top: 10px;
-            border-radius: 5px;
+            font-size: 1.2em;
             background-color: #0078d4;
-            border: none;
             color: white;
-            font-size: 1em;
+            border: none;
+            border-radius: 5px;
             cursor: pointer;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         }
 
-        /* Time and Account Display */
+        .login-container button:hover {
+            background-color: #005a92;
+        }
+
+        /* Time Display (for Login Page and Desktop) */
         .time-display {
             position: absolute;
             bottom: 10px;
@@ -83,20 +85,20 @@
         }
 
         /* Loading Screen */
-        .loading {
+        .loading-screen {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.7);
             display: flex;
             justify-content: center;
             align-items: center;
             visibility: hidden;
         }
 
-        .loading span {
+        .loading-screen span {
             color: white;
             font-size: 1.5em;
             animation: blink 1s infinite;
@@ -108,7 +110,7 @@
             }
         }
 
-        /* Background image */
+        /* Background image (to mimic Windows login) */
         .background {
             position: absolute;
             top: 0;
@@ -118,20 +120,60 @@
             background: url('https://github.com/bob-is-cool-arg/vitalis-arg/blob/main/desktop-background.jpg') no-repeat center center fixed;
             background-size: cover;
         }
+
+        /* Full Screen Overlay (for Document Interaction) */
+        .document-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            visibility: hidden;
+            z-index: 3;
+        }
+
+        .document-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 20px;
+            width: 70%;
+            max-width: 600px;
+            border-radius: 10px;
+            overflow-y: auto;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .document-header {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .document-body {
+            font-size: 14px;
+            line-height: 1.6;
+        }
     </style>
 </head>
 <body>
 
+    <!-- Background Image -->
     <div class="background"></div>
 
+    <!-- Login Container -->
     <div class="login-container">
         <h1>Sign In</h1>
-        <input type="text" id="username" placeholder="Username" required>
-        <input type="password" id="password" placeholder="Password" required>
+        <input type="text" id="username" placeholder="Username" />
+        <input type="password" id="password" placeholder="Password" />
         <button onclick="login()">Sign In</button>
     </div>
 
-    <div class="loading" id="loading-screen">
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loading-screen">
         <span>Loading...</span>
     </div>
 
@@ -139,11 +181,24 @@
     <div class="time-display" id="time-display">7:07 PM</div>
     <div class="account-display" id="account-display">Account: Bob Williams</div>
 
+    <!-- Document Overlay (Appears After Login) -->
+    <div class="document-overlay" id="document-overlay">
+        <div class="document-container">
+            <div class="document-header">Confidential Document</div>
+            <div class="document-body" id="document-content">
+                <!-- Document content goes here -->
+                <p><strong>Date:</strong> September 25, 2004</p>
+                <p><strong>Note from Bob Williams:</strong> I wish I could spend more time with Ava... she's growing up so fast, and it's hard not being there for her. I know she misses me too... but I have to work hard to provide for her. Maybe I should take a day off soon... She's only 10, after all... </p>
+            </div>
+        </div>
+    </div>
+
     <script>
+        // Login Credentials
         let correctUsername = "Bob Williams";
         let correctPassword = "Ava-1994";
 
-        // Update time display every second
+        // Time Update (Military Time on Login Page, Normal on Desktop)
         setInterval(function() {
             let date = new Date();
             let hours = date.getHours();
@@ -158,7 +213,7 @@
             document.getElementById("time-display").innerText = currentTime;
         }, 1000);
 
-        // Display login loading screen
+        // Show loading screen
         function showLoading() {
             document.getElementById("loading-screen").style.visibility = "visible";
         }
@@ -167,7 +222,7 @@
             document.getElementById("loading-screen").style.visibility = "hidden";
         }
 
-        // Login logic
+        // Login validation
         function login() {
             showLoading();
             setTimeout(function() {
@@ -175,14 +230,18 @@
                 let password = document.getElementById("password").value;
                 if (username === correctUsername && password === correctPassword) {
                     hideLoading();
-                    window.location.href = "desktop.html"; // Redirect to desktop page
+                    window.location.href = "desktop.html"; // Redirect to desktop
                 } else {
-                    alert("Invalid credentials");
+                    alert("Invalid credentials.");
                     hideLoading();
                 }
-            }, 2000); // Simulate loading time (2 seconds)
+            }, 2000); // Simulate loading time
+        }
+
+        // Function to show document content
+        function showDocument() {
+            document.getElementById("document-overlay").style.visibility = "visible";
         }
     </script>
-
 </body>
 </html>
