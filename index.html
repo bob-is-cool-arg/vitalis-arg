@@ -3,62 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ARG Login Interface</title>
+    <title>Login Screen</title>
     <style>
-        /* General Body Styling */
+        /* General Styling */
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Courier New', Courier, monospace;
+            font-family: 'Arial', sans-serif;
             background-image: url('https://github.com/bob-is-cool-arg/vitalis-arg/blob/main/desktop-background.jpg?raw=true');
             background-size: cover;
             background-position: center;
             height: 100vh;
             overflow: hidden;
-            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        /* Military Time */
-        .time-left {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            font-size: 24px;
-            font-weight: bold;
-            color: #4caf50;
-        }
-
-        /* Corner Time/Date */
-        .corner-time {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            font-size: 16px;
-            color: #ccc;
-        }
-
-        /* Login Screen */
-        .login-container {
+        /* Loading Screen */
+        .loading-screen {
             position: fixed;
-            top: 25%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            color: white;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            z-index: 3;
+        }
+
+        /* Login Container */
+        .login-container {
             background-color: rgba(0, 0, 0, 0.8);
-            padding: 30px;
-            width: 450px;
-            border-radius: 15px;
+            padding: 40px;
+            width: 400px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            text-align: center;
             display: none;
             z-index: 2;
         }
 
+        .login-container h2 {
+            color: white;
+            margin-bottom: 20px;
+        }
+
         .login-container input {
-            width: 90%;
+            width: 85%;
             padding: 10px;
             margin: 10px 0;
             border: none;
             border-radius: 5px;
-            background-color: #333;
+            background-color: #222;
             color: white;
+            outline: none;
         }
 
         .login-container button {
@@ -76,41 +79,22 @@
             background-color: #77dd77;
         }
 
-        .login-container .error {
-            color: red;
-            font-size: 14px;
-            display: none;
-            margin-top: 10px;
-        }
-
-        .login-footer {
-            margin-top: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .login-footer a {
-            color: #77b5fe;
-            text-decoration: none;
-            font-size: 14px;
+        /* Close Button */
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 20px;
             cursor: pointer;
-        }
-
-        .login-footer a:hover {
-            text-decoration: underline;
+            color: white;
         }
 
         /* Document Viewer */
         .document {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
             background-color: white;
             padding: 20px;
-            width: 650px;
-            height: 900px;
+            width: 600px;
+            height: 800px;
             overflow-y: auto;
             font-family: 'Georgia', serif;
             font-size: 18px;
@@ -123,14 +107,10 @@
         }
 
         .document .header {
-            font-size: 28px;
+            font-size: 24px;
             font-weight: bold;
             margin-bottom: 15px;
             text-align: center;
-        }
-
-        .document p {
-            text-indent: 30px;
         }
 
         .document .close-btn {
@@ -146,106 +126,93 @@
             color: black;
         }
 
-        /* Blur Effect */
-        .blur {
-            filter: blur(10px);
-            transition: filter 0.3s ease-in-out;
+        /* Page Number */
+        .page-number {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            font-size: 12px;
+            color: #777;
         }
     </style>
 </head>
 <body>
-    <!-- Persistent Military Time -->
-    <div class="time-left" id="militaryTime">--:--</div>
+
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        Loading...
+    </div>
 
     <!-- Login Container -->
     <div class="login-container" id="loginScreen">
-        <h2>Login</h2>
+        <span class="close-btn" id="closeLogin">X</span>
+        <h2>Welcome</h2>
         <input type="text" id="username" placeholder="Username">
         <input type="password" id="password" placeholder="Password">
         <button id="loginButton">Log In</button>
-        <p class="error" id="errorMessage">Invalid username or password.</p>
-        <div class="login-footer">
-            <span id="userAccount">Bob Williams</span>
-            <a id="viewDocument">View Document</a>
-        </div>
     </div>
 
     <!-- Document Viewer -->
     <div class="document" id="documentViewer">
         <span class="close-btn" id="closeDocument">X</span>
-        <div class="header">Personal Journal</div>
+        <div class="header">Personal Journal - Entry #37</div>
+        <div class="date">September 12, 1994</div>
         <p>
-            April 29, 2005.  
-            Life within Vitalis Research has always been intense. For years, I’ve worked to build something meaningful, 
-            not just for the world, but for Ava. She was born in 1994, and now, at 11 years old, she’s my driving force. 
-            Everything I do is to create a better future for her—one where she’s safe and the horrors of this world 
-            no longer reach her innocent heart.
+            The days seem to blur together. The long shifts, the endless piles of paperwork, the constant pressure to perform. But the worst part... is not being able to spend time with Ava. 
+            She's 10 now, can you believe it? The time has passed so quickly, and yet, I feel like I've missed so much of it. I keep telling myself it's for her, that it's all for her future. But, I can't help but wonder... 
+            does she even know who I am anymore? She's growing up so fast, and I'm barely around to witness it. I wish I could be there more for her, but this job... it keeps pulling me away.
+            <br><br>
+            I can't stop thinking about her. I need to make this all worth it. For her.
         </p>
-        <p>
-            I question myself often, wondering if the means I use will ever justify the ends. Vitalis has secrets even 
-            I don't fully understand. But for Ava’s sake, I keep going.
-        </p>
+        <div class="page-number">Page 1</div>
     </div>
 
     <script>
-        // Military Time Updater
-        function updateTime() {
-            const now = new Date();
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            document.getElementById('militaryTime').textContent = `${hours}:${minutes}`;
-        }
-        setInterval(updateTime, 1000);
-
-        // Elements
+        const loadingScreen = document.getElementById('loadingScreen');
         const loginScreen = document.getElementById('loginScreen');
         const documentViewer = document.getElementById('documentViewer');
-        const errorMessage = document.getElementById('errorMessage');
 
-        // Show Login on Background Click
+        // Function to show loading screen
+        function showLoadingScreen(duration, callback) {
+            loadingScreen.style.display = 'flex';
+            setTimeout(() => {
+                loadingScreen.style.display = 'none';
+                if (callback) callback();
+            }, duration);
+        }
+
+        // Show Login Screen on Click Anywhere
         document.body.addEventListener('click', () => {
-            loginScreen.style.display = 'block';
-            document.body.classList.add('blur');
+            showLoadingScreen(1500, () => {
+                loginScreen.style.display = 'block';
+            });
         });
 
-        // Login Logic
-        let attempts = 0;
-        let locked = false;
+        // Close Login Screen
+        document.getElementById('closeLogin').addEventListener('click', () => {
+            loginScreen.style.display = 'none';
+        });
 
+        // Log In Button Logic
         document.getElementById('loginButton').addEventListener('click', () => {
-            if (locked) return;
-
-            const username = document.getElementById('username').value.trim();
-            const password = document.getElementById('password').value.trim();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
 
             if (username === 'Bob Williams' && password === 'Ava-1994') {
-                loginScreen.style.display = 'none';
-                document.body.classList.remove('blur');
+                showLoadingScreen(2000, () => {
+                    loginScreen.style.display = 'none';
+                    documentViewer.style.display = 'block';
+                });
             } else {
-                attempts++;
-                errorMessage.style.display = 'block';
-                if (attempts >= 10) {
-                    locked = true;
-                    errorMessage.textContent = "Too many attempts. Try again in 1 minute.";
-                    setTimeout(() => {
-                        locked = false;
-                        errorMessage.style.display = 'none';
-                    }, 60000);
-                }
+                alert('Incorrect username or password');
             }
-        });
-
-        // Open Document Viewer
-        document.getElementById('viewDocument').addEventListener('click', () => {
-            documentViewer.style.display = 'block';
-            loginScreen.classList.add('blur');
         });
 
         // Close Document Viewer
         document.getElementById('closeDocument').addEventListener('click', () => {
             documentViewer.style.display = 'none';
-            loginScreen.classList.remove('blur');
         });
     </script>
+
 </body>
 </html>
