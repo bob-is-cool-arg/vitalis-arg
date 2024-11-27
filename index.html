@@ -3,20 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vitalis ARG Login</title>
+  <title>Vitalis ARG</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <!-- Pre-login screen -->
   <div id="pre-login-screen">
     <img id="background" src="https://github.com/bob-is-cool-arg/vitalis-arg/blob/main/desktop-background.jpg" alt="Background">
-    <div id="time-container">
-      <span id="military-time"></span>
-      <span id="static-date">04:29 2003</span>
+    <div id="time-display">
+      <div id="military-time"></div>
+      <div id="static-date">04:29 2003</div>
     </div>
   </div>
 
-  <!-- Login interface -->
+  <!-- Login screen -->
   <div id="login-screen" class="hidden">
     <div id="login-popup">
       <button id="close-login" class="close-button">X</button>
@@ -29,21 +29,21 @@
         <button type="submit" id="login-button">Login</button>
       </form>
       <div id="memo-link">
-        <a href="#" id="memo-button">Internal Memo - Vitalis Research</a>
+        <a href="document.html" target="_blank">View Internal Memo</a>
       </div>
-      <div id="login-footer">
-        <span id="small-time"></span>
-        <div id="user-info">
-          <img id="profile-pic" src="https://github.com/bob-is-cool-arg/vitalis-arg/blob/main/Default_pfp.svg.png" alt="Profile Picture">
-          <span>Bob Williams</span>
-        </div>
+    </div>
+    <div id="login-footer">
+      <div id="footer-time"></div>
+      <div id="footer-info">
+        <img id="profile-pic" src="https://github.com/bob-is-cool-arg/vitalis-arg/blob/main/Default_pfp.svg.png" alt="Profile Picture">
+        <span>Bob Williams</span>
       </div>
     </div>
   </div>
 
   <!-- Loading screen -->
   <div id="loading-screen" class="hidden">
-    <span>Loading...</span>
+    <div class="loading-text">Loading...</div>
   </div>
 
   <script src="script.js"></script>
